@@ -410,4 +410,42 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get notSet => 'Nicht festgelegt';
+
+  @override
+  String get settingsFont => 'Schriftart';
+
+  @override
+  String get fontSystem => 'Systemschrift';
+
+  @override
+  String get fontCustom => 'Eigene Schriften';
+
+  @override
+  String get fontAdd => 'Schrift hinzufügen';
+
+  @override
+  String get fontAddHint => 'TTF- oder OTF-Datei, bis 5 MB';
+
+  @override
+  String fontAdded(String name) {
+    return 'Schrift hinzugefügt: $name';
+  }
+
+  @override
+  String get fontTooLarge => 'Die Datei ist zu groß (max. 5 MB)';
+
+  @override
+  String get fontNotAFont => 'Diese Datei ist keine gültige Schrift';
+
+  @override
+  String get fontUnsupported =>
+      'Schriftsammlungen und WOFF werden nicht unterstützt, bitte TTF oder OTF verwenden';
+
+  @override
+  String fontDeleteTitle(String name) {
+    return 'Schrift $name löschen?';
+  }
+
+  @override
+  String get fontPreview => 'Heute 1 240 kcal · Eiweiß 96 g';
 }

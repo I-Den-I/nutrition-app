@@ -869,6 +869,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not set'**
   String get notSet;
+
+  /// No description provided for @settingsFont.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get settingsFont;
+
+  /// No description provided for @fontSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System font'**
+  String get fontSystem;
+
+  /// No description provided for @fontCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Your fonts'**
+  String get fontCustom;
+
+  /// No description provided for @fontAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add font'**
+  String get fontAdd;
+
+  /// No description provided for @fontAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'TTF or OTF file, up to 5 MB'**
+  String get fontAddHint;
+
+  /// No description provided for @fontAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Font added: {name}'**
+  String fontAdded(String name);
+
+  /// No description provided for @fontTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The file is too large (max 5 MB)'**
+  String get fontTooLarge;
+
+  /// No description provided for @fontNotAFont.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is not a valid font'**
+  String get fontNotAFont;
+
+  /// No description provided for @fontUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Font collections and WOFF files are not supported, use TTF or OTF'**
+  String get fontUnsupported;
+
+  /// No description provided for @fontDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete font {name}?'**
+  String fontDeleteTitle(String name);
+
+  /// No description provided for @fontPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Today 1 240 kcal · Protein 96 g'**
+  String get fontPreview;
 }
 
 class _AppLocalizationsDelegate

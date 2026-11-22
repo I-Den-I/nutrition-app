@@ -409,4 +409,42 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get notSet => 'Не задано';
+
+  @override
+  String get settingsFont => 'Шрифт';
+
+  @override
+  String get fontSystem => 'Системный шрифт';
+
+  @override
+  String get fontCustom => 'Ваши шрифты';
+
+  @override
+  String get fontAdd => 'Добавить шрифт';
+
+  @override
+  String get fontAddHint => 'Файл TTF или OTF, до 5 МБ';
+
+  @override
+  String fontAdded(String name) {
+    return 'Шрифт добавлен: $name';
+  }
+
+  @override
+  String get fontTooLarge => 'Файл слишком большой (максимум 5 МБ)';
+
+  @override
+  String get fontNotAFont => 'Этот файл не является корректным шрифтом';
+
+  @override
+  String get fontUnsupported =>
+      'Коллекции шрифтов и WOFF не поддерживаются, используйте TTF или OTF';
+
+  @override
+  String fontDeleteTitle(String name) {
+    return 'Удалить шрифт $name?';
+  }
+
+  @override
+  String get fontPreview => 'Сегодня 1 240 ккал · Белки 96 г';
 }

@@ -5,6 +5,7 @@ import '../../features/diary/data/meal_groups_repository.dart';
 import '../../features/dishes/data/dishes_repository.dart';
 import '../../features/products/data/products_repository.dart';
 import '../../features/profile/data/profile_repository.dart';
+import '../fonts/custom_fonts_repository.dart';
 import '../media/media_repository.dart';
 import '../media/media_storage.dart';
 import 'database_provider.dart';
@@ -39,4 +40,9 @@ final profileRepositoryProvider = Provider(
 final mediaRepositoryProvider = Provider((ref) {
   final db = ref.watch(databaseProvider);
   return MediaRepository(db, MediaStorage(db));
+});
+
+final customFontsRepositoryProvider = Provider((ref) {
+  final db = ref.watch(databaseProvider);
+  return CustomFontsRepository(db, MediaStorage(db));
 });

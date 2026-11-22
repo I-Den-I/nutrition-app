@@ -7,6 +7,8 @@ import '../../../core/db/repositories.dart';
 import '../../../core/db/shared_providers.dart';
 import '../../../core/domain/formatting.dart';
 import '../../../core/entitlements/entitlements.dart';
+import '../../../core/fonts/app_fonts.dart';
+import '../../../core/fonts/font_providers.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/settings/app_settings.dart';
@@ -29,6 +31,17 @@ class SettingsScreen extends ConsumerWidget {
     final tracked = ref.watch(trackedNutrientsProvider);
     final groups = ref.watch(visibleMealGroupsProvider);
     final loc = localeOf(context);
+    final fontId = settings.fontId;
+    final customFonts = ref.watch(customFontsProvider).value ?? const [];
+    final fontName = fontId == systemFontId
+        ? l10n.fontSystem
+        : fontId.startsWith('custom:')
+        ? customFonts
+                  .where((f) => customFontId(f.id) == fontId)
+                  .firstOrNull
+                  ?.name ??
+              ''
+        : fontFamilyFor(fontId)!;
 
     String? profileSummary() {
       final p = profile?.profile;
@@ -136,6 +149,13 @@ class SettingsScreen extends ConsumerWidget {
                       label: Text(l10n.themeDark),
                     ),
                   ],
+                ),
+                SectionLabel(l10n.settingsFont),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(fontName),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Routes.settingsFonts),
                 ),
                 SectionLabel(l10n.settingsMode),
                 Text(entitlements.isCloud ? l10n.modeCloud : l10n.modeLocal),

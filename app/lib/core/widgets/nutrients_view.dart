@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../domain/formatting.dart';
 import '../domain/nutrients.dart';
 import '../l10n/l10n.dart';
+import '../theme/app_theme.dart';
 import '../theme/app_tokens.dart';
 import 'labels.dart';
 
@@ -49,7 +50,7 @@ class NutrientsPanel extends StatelessWidget {
         children: [
           Text(
             '${formatAmount(value, loc)} $unit',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 16, fontWeight: context.strongWeight),
           ),
           Text(
             label,
@@ -99,9 +100,9 @@ class NutrientsPanel extends StatelessWidget {
               children: [
                 Text(
                   formatAmount(nutrients.kcal, loc),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 28,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: context.strongWeight,
                     letterSpacing: -0.5,
                   ),
                 ),

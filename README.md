@@ -60,6 +60,10 @@ flutter run --dart-define-from-file=config/backend.json
 
 `config/backend.json` is git-ignored. Only public, client-safe values belong there; secrets stay on the server. Which cloud features are available is decided by the server, so a self-hosted instance can enable all of them. The backend and a self-hosting guide arrive with the cloud stage of the roadmap.
 
+## Fonts
+
+The app ships with Comfortaa (default), Nunito, Manrope, Inter and Rubik, all under the [SIL Open Font License](https://openfontlicense.org) (license files next to each font in `app/assets/fonts`). Users can also pick the platform font or add their own TTF/OTF file (up to 5 MB) in Settings → Font; files are validated before use and stay on the device.
+
 ## Translations
 
 UI strings are in `app/lib/core/l10n/arb/` (`app_en.arb` is the template). Add a new key to every language file, or add a new `app_<code>.arb` file to support another language.

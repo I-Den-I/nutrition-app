@@ -34,5 +34,7 @@ The owner is not a programmer: talk to them in Ukrainian, in plain words. Code, 
 - Generated files (`*.g.dart`, `lib/core/l10n/gen/`) are committed.
 - Schema change → bump `schemaVersion`, add an `onUpgrade` step, extend `test/db/migration_test.dart`.
 - iOS number pads have no "Done" key: the app-level tap/scroll handler in `app.dart` closes the keyboard; keep it.
+- Component themes in `app_theme.dart` must use plain `TextStyle`s that carry `fontFamily` (copy from the text theme). A `WidgetStateTextStyle` loses the font when widgets merge styles, and the chips fell back to the system font.
+- User-provided files (fonts, photos) are validated by content, stored under our own random key and never used to build paths, family names or SQL.
 - Every `FloatingActionButton` needs `heroTag: null` (tabs live side by side in an IndexedStack).
 - Shared UI pieces live in `lib/core/widgets/` (`NumberField`, `SelectChip`, `NutrientsPanel`, `PhotoEditor`…); reuse them before writing new ones.

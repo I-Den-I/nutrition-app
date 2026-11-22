@@ -5,7 +5,6 @@
   "navProducts": "Продукты",
   "navDishes": "Блюда",
   "navSettings": "Настройки",
-
   "actionContinue": "Далее",
   "actionSave": "Сохранить",
   "actionCancel": "Отмена",
@@ -20,10 +19,8 @@
   "fieldInvalidNumber": "Введите число",
   "unsavedChangesTitle": "Отменить изменения?",
   "actionDiscard": "Отменить изменения",
-
   "onboardingChooseLanguage": "Выберите язык",
   "onboardingLanguageHint": "Его можно изменить позже в настройках.",
-
   "profileTitle": "О вас",
   "profileHint": "Нужно, чтобы рассчитать суточную норму калорий и БЖУ. Можно пропустить и задать цели вручную.",
   "sex": "Пол",
@@ -47,18 +44,15 @@
   "goalLose": "Похудеть",
   "goalMaintain": "Поддерживать",
   "goalGain": "Набрать",
-
   "goalsTitle": "Дневные цели",
   "goalsAutoHint": "Рассчитано по вашему профилю. Измените любое значение, чтобы задать вручную.",
   "goalsManualHint": "Задано вручную.",
   "goalsRecalculate": "Пересчитать по профилю",
   "kcalFromMacros": "По БЖУ: {value} ккал",
-
   "emptyProducts": "Продуктов пока нет",
   "emptyDishes": "Блюд пока нет",
   "emptyDiary": "За этот день ничего не добавлено",
   "nothingFound": "Ничего не найдено",
-
   "today": "Сегодня",
   "yesterday": "Вчера",
   "tomorrow": "Завтра",
@@ -72,7 +66,6 @@
   "editEntry": "Изменить запись",
   "grams": "Граммы",
   "mealGroup": "Приём пищи",
-
   "nutrientKcal": "ккал",
   "nutrientProtein": "Белки",
   "nutrientFat": "Жиры",
@@ -87,12 +80,10 @@
   "unitCm": "см",
   "unitKg": "кг",
   "unitMl": "мл",
-
   "mealBreakfast": "Завтрак",
   "mealLunch": "Обед",
   "mealDinner": "Ужин",
   "mealSnack": "Перекус",
-
   "productNew": "Новый продукт",
   "productEdit": "Изменить продукт",
   "fieldName": "Название",
@@ -109,7 +100,6 @@
   "photoCamera": "Сделать фото",
   "deleteProductTitle": "Удалить продукт?",
   "deleteProductBody": "Он исчезнет из списка. Записи в дневнике и блюда с ним сохранятся.",
-
   "dishNew": "Новое блюдо",
   "dishEdit": "Изменить блюдо",
   "ingredients": "Ингредиенты",
@@ -122,7 +112,6 @@
   "deleteDishTitle": "Удалить блюдо?",
   "deleteDishBody": "Оно исчезнет из списка. Записи в дневнике с ним сохранятся.",
   "chooseProduct": "Выберите продукт",
-
   "settingsLanguage": "Язык",
   "settingsTheme": "Тема",
   "themeSystem": "Системная",
@@ -138,5 +127,16 @@
   "settingsMealGroups": "Приёмы пищи",
   "mealGroupAdd": "Добавить группу",
   "mealGroupName": "Название группы",
-  "notSet": "Не задано"
+  "notSet": "Не задано",
+  "settingsFont": "Шрифт",
+  "fontSystem": "Системный шрифт",
+  "fontCustom": "Ваши шрифты",
+  "fontAdd": "Добавить шрифт",
+  "fontAddHint": "Файл TTF или OTF, до 5 МБ",
+  "fontAdded": "Шрифт добавлен: {name}",
+  "fontTooLarge": "Файл слишком большой (максимум 5 МБ)",
+  "fontNotAFont": "Этот файл не является корректным шрифтом",
+  "fontUnsupported": "Коллекции шрифтов и WOFF не поддерживаются, используйте TTF или OTF",
+  "fontDeleteTitle": "Удалить шрифт {name}?",
+  "fontPreview": "Сегодня 1 240 ккал · Белки 96 г"
 }

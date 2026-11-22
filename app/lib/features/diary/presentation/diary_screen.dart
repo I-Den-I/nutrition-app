@@ -9,6 +9,7 @@ import '../../../core/domain/formatting.dart';
 import '../../../core/domain/nutrients.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/router/routes.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/form_fields.dart';
@@ -234,7 +235,7 @@ class _GroupSection extends StatelessWidget {
             ),
             trailing: Text(
               formatAmount(e.nutrients.kcal, loc),
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 15, fontWeight: context.strongWeight),
             ),
             onTap: () =>
                 showPortionSheet(context, name: e.name, entry: e.entry),
@@ -286,9 +287,9 @@ class _DayTotalCard extends StatelessWidget {
             Text.rich(
               TextSpan(
                 text: f(value),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: context.strongWeight,
                 ),
                 children: [
                   TextSpan(

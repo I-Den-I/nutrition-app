@@ -5,7 +5,6 @@
   "navProducts": "Products",
   "navDishes": "Dishes",
   "navSettings": "Settings",
-
   "actionContinue": "Continue",
   "actionSave": "Save",
   "actionCancel": "Cancel",
@@ -20,10 +19,8 @@
   "fieldInvalidNumber": "Enter a number",
   "unsavedChangesTitle": "Discard changes?",
   "actionDiscard": "Discard",
-
   "onboardingChooseLanguage": "Choose your language",
   "onboardingLanguageHint": "You can change it later in settings.",
-
   "profileTitle": "About you",
   "profileHint": "Used to estimate your daily calories and macros. You can skip this and set goals manually.",
   "sex": "Sex",
@@ -47,47 +44,63 @@
   "goalLose": "Lose",
   "goalMaintain": "Maintain",
   "goalGain": "Gain",
-
   "goalsTitle": "Daily goals",
   "goalsAutoHint": "Calculated from your profile. Change any value to set it manually.",
   "goalsManualHint": "Set manually.",
   "goalsRecalculate": "Recalculate from profile",
   "kcalFromMacros": "From macros: {value} kcal",
   "@kcalFromMacros": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
-
   "emptyProducts": "No products yet",
   "emptyDishes": "No dishes yet",
   "emptyDiary": "Nothing logged on this day",
   "nothingFound": "Nothing found",
-
   "today": "Today",
   "yesterday": "Yesterday",
   "tomorrow": "Tomorrow",
   "dayTotal": "Day total",
   "ofGoal": "of {goal}",
   "@ofGoal": {
-    "placeholders": { "goal": { "type": "String" } }
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
   },
   "kcalLeft": "{value} kcal left",
   "@kcalLeft": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "kcalOver": "{value} kcal over",
   "@kcalOver": {
-    "placeholders": { "value": { "type": "String" } }
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "noMealGroup": "Other",
   "addToDiary": "Add to diary",
   "addedToDiary": "Added: {name}",
   "@addedToDiary": {
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "editEntry": "Edit entry",
   "grams": "Grams",
   "mealGroup": "Meal",
-
   "nutrientKcal": "kcal",
   "nutrientProtein": "Protein",
   "nutrientFat": "Fat",
@@ -102,12 +115,10 @@
   "unitCm": "cm",
   "unitKg": "kg",
   "unitMl": "ml",
-
   "mealBreakfast": "Breakfast",
   "mealLunch": "Lunch",
   "mealDinner": "Dinner",
   "mealSnack": "Snack",
-
   "productNew": "New product",
   "productEdit": "Edit product",
   "fieldName": "Name",
@@ -124,7 +135,6 @@
   "photoCamera": "Take a photo",
   "deleteProductTitle": "Delete this product?",
   "deleteProductBody": "It disappears from the list. Diary entries and dishes that use it are kept.",
-
   "dishNew": "New dish",
   "dishEdit": "Edit dish",
   "ingredients": "Ingredients",
@@ -137,7 +147,6 @@
   "deleteDishTitle": "Delete this dish?",
   "deleteDishBody": "It disappears from the list. Diary entries that use it are kept.",
   "chooseProduct": "Choose a product",
-
   "settingsLanguage": "Language",
   "settingsTheme": "Theme",
   "themeSystem": "System",
@@ -153,5 +162,30 @@
   "settingsMealGroups": "Meal groups",
   "mealGroupAdd": "Add group",
   "mealGroupName": "Group name",
-  "notSet": "Not set"
+  "notSet": "Not set",
+  "settingsFont": "Font",
+  "fontSystem": "System font",
+  "fontCustom": "Your fonts",
+  "fontAdd": "Add font",
+  "fontAddHint": "TTF or OTF file, up to 5 MB",
+  "fontAdded": "Font added: {name}",
+  "@fontAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fontTooLarge": "The file is too large (max 5 MB)",
+  "fontNotAFont": "This file is not a valid font",
+  "fontUnsupported": "Font collections and WOFF files are not supported, use TTF or OTF",
+  "fontDeleteTitle": "Delete font {name}?",
+  "@fontDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fontPreview": "Today 1 240 kcal · Protein 96 g"
 }

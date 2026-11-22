@@ -5,7 +5,6 @@
   "navProducts": "Продукти",
   "navDishes": "Страви",
   "navSettings": "Налаштування",
-
   "actionContinue": "Далі",
   "actionSave": "Зберегти",
   "actionCancel": "Скасувати",
@@ -20,10 +19,8 @@
   "fieldInvalidNumber": "Введіть число",
   "unsavedChangesTitle": "Скасувати зміни?",
   "actionDiscard": "Скасувати зміни",
-
   "onboardingChooseLanguage": "Оберіть мову",
   "onboardingLanguageHint": "Її можна змінити пізніше в налаштуваннях.",
-
   "profileTitle": "Про вас",
   "profileHint": "Потрібно, щоб розрахувати добову норму калорій і БЖВ. Можна пропустити й задати цілі вручну.",
   "sex": "Стать",
@@ -47,18 +44,15 @@
   "goalLose": "Схуднути",
   "goalMaintain": "Підтримувати",
   "goalGain": "Набрати",
-
   "goalsTitle": "Добові цілі",
   "goalsAutoHint": "Розраховано за вашим профілем. Змініть будь-яке значення, щоб задати вручну.",
   "goalsManualHint": "Задано вручну.",
   "goalsRecalculate": "Перерахувати за профілем",
   "kcalFromMacros": "За БЖВ: {value} ккал",
-
   "emptyProducts": "Продуктів ще немає",
   "emptyDishes": "Страв ще немає",
   "emptyDiary": "За цей день нічого не додано",
   "nothingFound": "Нічого не знайдено",
-
   "today": "Сьогодні",
   "yesterday": "Вчора",
   "tomorrow": "Завтра",
@@ -72,7 +66,6 @@
   "editEntry": "Редагувати запис",
   "grams": "Грами",
   "mealGroup": "Прийом їжі",
-
   "nutrientKcal": "ккал",
   "nutrientProtein": "Білки",
   "nutrientFat": "Жири",
@@ -87,12 +80,10 @@
   "unitCm": "см",
   "unitKg": "кг",
   "unitMl": "мл",
-
   "mealBreakfast": "Сніданок",
   "mealLunch": "Обід",
   "mealDinner": "Вечеря",
   "mealSnack": "Перекус",
-
   "productNew": "Новий продукт",
   "productEdit": "Редагувати продукт",
   "fieldName": "Назва",
@@ -109,7 +100,6 @@
   "photoCamera": "Зробити фото",
   "deleteProductTitle": "Видалити продукт?",
   "deleteProductBody": "Він зникне зі списку. Записи в щоденнику та страви з ним залишаться.",
-
   "dishNew": "Нова страва",
   "dishEdit": "Редагувати страву",
   "ingredients": "Інгредієнти",
@@ -122,7 +112,6 @@
   "deleteDishTitle": "Видалити страву?",
   "deleteDishBody": "Вона зникне зі списку. Записи в щоденнику з нею залишаться.",
   "chooseProduct": "Оберіть продукт",
-
   "settingsLanguage": "Мова",
   "settingsTheme": "Тема",
   "themeSystem": "Системна",
@@ -138,5 +127,16 @@
   "settingsMealGroups": "Прийоми їжі",
   "mealGroupAdd": "Додати групу",
   "mealGroupName": "Назва групи",
-  "notSet": "Не задано"
+  "notSet": "Не задано",
+  "settingsFont": "Шрифт",
+  "fontSystem": "Системний шрифт",
+  "fontCustom": "Ваші шрифти",
+  "fontAdd": "Додати шрифт",
+  "fontAddHint": "Файл TTF або OTF, до 5 МБ",
+  "fontAdded": "Шрифт додано: {name}",
+  "fontTooLarge": "Файл завеликий (максимум 5 МБ)",
+  "fontNotAFont": "Цей файл не є коректним шрифтом",
+  "fontUnsupported": "Колекції шрифтів і WOFF не підтримуються, використайте TTF або OTF",
+  "fontDeleteTitle": "Видалити шрифт {name}?",
+  "fontPreview": "Сьогодні 1 240 ккал · Білки 96 г"
 }

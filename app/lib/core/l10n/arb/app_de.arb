@@ -5,7 +5,6 @@
   "navProducts": "Produkte",
   "navDishes": "Gerichte",
   "navSettings": "Einstellungen",
-
   "actionContinue": "Weiter",
   "actionSave": "Speichern",
   "actionCancel": "Abbrechen",
@@ -20,10 +19,8 @@
   "fieldInvalidNumber": "Zahl eingeben",
   "unsavedChangesTitle": "Änderungen verwerfen?",
   "actionDiscard": "Verwerfen",
-
   "onboardingChooseLanguage": "Sprache wählen",
   "onboardingLanguageHint": "Du kannst sie später in den Einstellungen ändern.",
-
   "profileTitle": "Über dich",
   "profileHint": "Damit wird dein täglicher Kalorien- und Makrobedarf geschätzt. Du kannst das überspringen und Ziele manuell setzen.",
   "sex": "Geschlecht",
@@ -47,18 +44,15 @@
   "goalLose": "Abnehmen",
   "goalMaintain": "Halten",
   "goalGain": "Zunehmen",
-
   "goalsTitle": "Tagesziele",
   "goalsAutoHint": "Aus deinem Profil berechnet. Ändere einen Wert, um ihn manuell festzulegen.",
   "goalsManualHint": "Manuell festgelegt.",
   "goalsRecalculate": "Aus Profil neu berechnen",
   "kcalFromMacros": "Aus Makros: {value} kcal",
-
   "emptyProducts": "Noch keine Produkte",
   "emptyDishes": "Noch keine Gerichte",
   "emptyDiary": "An diesem Tag nichts eingetragen",
   "nothingFound": "Nichts gefunden",
-
   "today": "Heute",
   "yesterday": "Gestern",
   "tomorrow": "Morgen",
@@ -72,7 +66,6 @@
   "editEntry": "Eintrag bearbeiten",
   "grams": "Gramm",
   "mealGroup": "Mahlzeit",
-
   "nutrientKcal": "kcal",
   "nutrientProtein": "Eiweiß",
   "nutrientFat": "Fett",
@@ -87,12 +80,10 @@
   "unitCm": "cm",
   "unitKg": "kg",
   "unitMl": "ml",
-
   "mealBreakfast": "Frühstück",
   "mealLunch": "Mittagessen",
   "mealDinner": "Abendessen",
   "mealSnack": "Snack",
-
   "productNew": "Neues Produkt",
   "productEdit": "Produkt bearbeiten",
   "fieldName": "Name",
@@ -109,7 +100,6 @@
   "photoCamera": "Foto aufnehmen",
   "deleteProductTitle": "Produkt löschen?",
   "deleteProductBody": "Es verschwindet aus der Liste. Tagebucheinträge und Gerichte damit bleiben erhalten.",
-
   "dishNew": "Neues Gericht",
   "dishEdit": "Gericht bearbeiten",
   "ingredients": "Zutaten",
@@ -122,7 +112,6 @@
   "deleteDishTitle": "Gericht löschen?",
   "deleteDishBody": "Es verschwindet aus der Liste. Tagebucheinträge damit bleiben erhalten.",
   "chooseProduct": "Produkt wählen",
-
   "settingsLanguage": "Sprache",
   "settingsTheme": "Design",
   "themeSystem": "System",
@@ -138,5 +127,16 @@
   "settingsMealGroups": "Mahlzeiten",
   "mealGroupAdd": "Gruppe hinzufügen",
   "mealGroupName": "Gruppenname",
-  "notSet": "Nicht festgelegt"
+  "notSet": "Nicht festgelegt",
+  "settingsFont": "Schriftart",
+  "fontSystem": "Systemschrift",
+  "fontCustom": "Eigene Schriften",
+  "fontAdd": "Schrift hinzufügen",
+  "fontAddHint": "TTF- oder OTF-Datei, bis 5 MB",
+  "fontAdded": "Schrift hinzugefügt: {name}",
+  "fontTooLarge": "Die Datei ist zu groß (max. 5 MB)",
+  "fontNotAFont": "Diese Datei ist keine gültige Schrift",
+  "fontUnsupported": "Schriftsammlungen und WOFF werden nicht unterstützt, bitte TTF oder OTF verwenden",
+  "fontDeleteTitle": "Schrift {name} löschen?",
+  "fontPreview": "Heute 1 240 kcal · Eiweiß 96 g"
 }

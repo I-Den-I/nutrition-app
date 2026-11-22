@@ -408,4 +408,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notSet => 'Not set';
+
+  @override
+  String get settingsFont => 'Font';
+
+  @override
+  String get fontSystem => 'System font';
+
+  @override
+  String get fontCustom => 'Your fonts';
+
+  @override
+  String get fontAdd => 'Add font';
+
+  @override
+  String get fontAddHint => 'TTF or OTF file, up to 5 MB';
+
+  @override
+  String fontAdded(String name) {
+    return 'Font added: $name';
+  }
+
+  @override
+  String get fontTooLarge => 'The file is too large (max 5 MB)';
+
+  @override
+  String get fontNotAFont => 'This file is not a valid font';
+
+  @override
+  String get fontUnsupported =>
+      'Font collections and WOFF files are not supported, use TTF or OTF';
+
+  @override
+  String fontDeleteTitle(String name) {
+    return 'Delete font $name?';
+  }
+
+  @override
+  String get fontPreview => 'Today 1 240 kcal · Protein 96 g';
 }

@@ -132,6 +132,18 @@ class MediaBlobs extends Table {
   Set<Column<Object>> get primaryKey => {key};
 }
 
+/// Fonts the user added on this device. Device-local, never synced:
+/// the font file itself lives in `MediaStorage` under [storageKey].
+class CustomFonts extends Table {
+  TextColumn get id => text().clientDefault(newId)();
+  TextColumn get name => text().withLength(min: 1, max: 80)();
+  TextColumn get storageKey => text()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 // ───────────────────────── Diary ─────────────────────────
 
 /// Built-in groups have a [systemKey] (translated in the UI);

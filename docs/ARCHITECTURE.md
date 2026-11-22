@@ -203,6 +203,8 @@ Language, theme and onboarding state are per-device preferences (SharedPreferenc
 
 Auto mode: BMR via Mifflin-St Jeor × activity factor ± deficit/surplus → calories; macros as g/kg of body weight or percentages. Any value can be overridden manually.
 
+All queries go through drift's typed, parameterized API; the only raw statement is a constant `PRAGMA`.
+
 Schema changes bump `schemaVersion` in `AppDatabase` with a step in `onUpgrade`; `test/db/migration_test.dart` checks upgrades.
 
 ### Server-only (cloud mode)
@@ -226,6 +228,8 @@ reports        content reports for moderation
 - Monochrome: black, white and greys; light and dark themes.
 - All colors go through **tokens** (`AppTokens`: `background`, `surface`, `border`, `textPrimary`, `accent`…). No hard-coded colors in widgets.
 - A future accent picker only swaps `accent` / `onAccent`.
+- **Fonts**: Comfortaa by default (bold body text, like rounded "app" typography), plus Nunito, Manrope, Inter, Rubik and the platform font. All bundled as static 400/600/700 files (`app/assets/fonts`, SIL Open Font License) so the app needs no network for fonts.
+- **User fonts**: TTF/OTF up to 5 MB, picked with `file_selector`. Before anything is stored the file is checked (`font_validator.dart`): size, sfnt magic (collections/WOFF rejected), table directory bounds, required tables, `head` magic. It is saved under a random key with an extension derived from the content, never from the user's file name, and registered with the engine under our own family name `custom-<uuid>`; if the engine rejects it, the stored file is removed. Display names are stripped of control and bidi characters. Fonts are device-local (`custom_fonts` table), not synced.
 - Minimal decoration: typography, spacing, thin dividers, large day-total numbers.
 
 ## 9. Media files

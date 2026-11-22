@@ -5133,6 +5133,316 @@ class MediaBlobsCompanion extends UpdateCompanion<MediaBlob> {
   }
 }
 
+class $CustomFontsTable extends CustomFonts
+    with TableInfo<$CustomFontsTable, CustomFont> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomFontsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: newId,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 80,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _storageKeyMeta = const VerificationMeta(
+    'storageKey',
+  );
+  @override
+  late final GeneratedColumn<String> storageKey = GeneratedColumn<String>(
+    'storage_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, storageKey, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'custom_fonts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CustomFont> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('storage_key')) {
+      context.handle(
+        _storageKeyMeta,
+        storageKey.isAcceptableOrUnknown(data['storage_key']!, _storageKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_storageKeyMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CustomFont map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CustomFont(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      storageKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}storage_key'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CustomFontsTable createAlias(String alias) {
+    return $CustomFontsTable(attachedDatabase, alias);
+  }
+}
+
+class CustomFont extends DataClass implements Insertable<CustomFont> {
+  final String id;
+  final String name;
+  final String storageKey;
+  final DateTime createdAt;
+  const CustomFont({
+    required this.id,
+    required this.name,
+    required this.storageKey,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['storage_key'] = Variable<String>(storageKey);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  CustomFontsCompanion toCompanion(bool nullToAbsent) {
+    return CustomFontsCompanion(
+      id: Value(id),
+      name: Value(name),
+      storageKey: Value(storageKey),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory CustomFont.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CustomFont(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      storageKey: serializer.fromJson<String>(json['storageKey']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'storageKey': serializer.toJson<String>(storageKey),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  CustomFont copyWith({
+    String? id,
+    String? name,
+    String? storageKey,
+    DateTime? createdAt,
+  }) => CustomFont(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    storageKey: storageKey ?? this.storageKey,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  CustomFont copyWithCompanion(CustomFontsCompanion data) {
+    return CustomFont(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      storageKey: data.storageKey.present
+          ? data.storageKey.value
+          : this.storageKey,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFont(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('storageKey: $storageKey, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, storageKey, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CustomFont &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.storageKey == this.storageKey &&
+          other.createdAt == this.createdAt);
+}
+
+class CustomFontsCompanion extends UpdateCompanion<CustomFont> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> storageKey;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const CustomFontsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.storageKey = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CustomFontsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String storageKey,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       storageKey = Value(storageKey);
+  static Insertable<CustomFont> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? storageKey,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (storageKey != null) 'storage_key': storageKey,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CustomFontsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? storageKey,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return CustomFontsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      storageKey: storageKey ?? this.storageKey,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (storageKey.present) {
+      map['storage_key'] = Variable<String>(storageKey.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFontsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('storageKey: $storageKey, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $DiaryEntriesTable extends DiaryEntries
     with TableInfo<$DiaryEntriesTable, DiaryEntry> {
   @override
@@ -7635,6 +7945,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $DishMealGroupsTable dishMealGroups = $DishMealGroupsTable(this);
   late final $MediaTable media = $MediaTable(this);
   late final $MediaBlobsTable mediaBlobs = $MediaBlobsTable(this);
+  late final $CustomFontsTable customFonts = $CustomFontsTable(this);
   late final $DiaryEntriesTable diaryEntries = $DiaryEntriesTable(this);
   late final $ProfilesTable profiles = $ProfilesTable(this);
   late final $WeightLogTable weightLog = $WeightLogTable(this);
@@ -7658,6 +7969,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     dishMealGroups,
     media,
     mediaBlobs,
+    customFonts,
     diaryEntries,
     profiles,
     weightLog,
@@ -11993,6 +12305,198 @@ typedef $$MediaBlobsTableProcessedTableManager =
       MediaBlob,
       PrefetchHooks Function()
     >;
+typedef $$CustomFontsTableCreateCompanionBuilder =
+    CustomFontsCompanion Function({
+      Value<String> id,
+      required String name,
+      required String storageKey,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$CustomFontsTableUpdateCompanionBuilder =
+    CustomFontsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> storageKey,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$CustomFontsTableFilterComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CustomFontsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CustomFontsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$CustomFontsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CustomFontsTable,
+          CustomFont,
+          $$CustomFontsTableFilterComposer,
+          $$CustomFontsTableOrderingComposer,
+          $$CustomFontsTableAnnotationComposer,
+          $$CustomFontsTableCreateCompanionBuilder,
+          $$CustomFontsTableUpdateCompanionBuilder,
+          (
+            CustomFont,
+            BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>,
+          ),
+          CustomFont,
+          PrefetchHooks Function()
+        > {
+  $$CustomFontsTableTableManager(_$AppDatabase db, $CustomFontsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CustomFontsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CustomFontsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CustomFontsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> storageKey = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFontsCompanion(
+                id: id,
+                name: name,
+                storageKey: storageKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String name,
+                required String storageKey,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFontsCompanion.insert(
+                id: id,
+                name: name,
+                storageKey: storageKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CustomFontsTable, CustomFont>(table),
+                  BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CustomFontsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CustomFontsTable,
+      CustomFont,
+      $$CustomFontsTableFilterComposer,
+      $$CustomFontsTableOrderingComposer,
+      $$CustomFontsTableAnnotationComposer,
+      $$CustomFontsTableCreateCompanionBuilder,
+      $$CustomFontsTableUpdateCompanionBuilder,
+      (
+        CustomFont,
+        BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>,
+      ),
+      CustomFont,
+      PrefetchHooks Function()
+    >;
 typedef $$DiaryEntriesTableCreateCompanionBuilder =
     DiaryEntriesCompanion Function({
       Value<String> id,
@@ -13515,6 +14019,8 @@ class $AppDatabaseManager {
       $$MediaTableTableManager(_db, _db.media);
   $$MediaBlobsTableTableManager get mediaBlobs =>
       $$MediaBlobsTableTableManager(_db, _db.mediaBlobs);
+  $$CustomFontsTableTableManager get customFonts =>
+      $$CustomFontsTableTableManager(_db, _db.customFonts);
   $$DiaryEntriesTableTableManager get diaryEntries =>
       $$DiaryEntriesTableTableManager(_db, _db.diaryEntries);
   $$ProfilesTableTableManager get profiles =>

@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'core/fonts/app_fonts.dart';
+import 'core/fonts/font_providers.dart';
 import 'core/l10n/l10n.dart';
 import 'core/router/app_router.dart';
 import 'core/settings/app_settings.dart';
@@ -13,12 +15,18 @@ class NutritionApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
     final router = ref.watch(routerProvider);
+    final font = ref.watch(activeFontFamilyProvider);
+    // While a user font loads, keep the default one instead of flashing
+    // the platform font.
+    final fontFamily = font.hasValue
+        ? font.value
+        : fontFamilyFor(defaultFontId);
 
     return MaterialApp.router(
       onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
+      theme: AppTheme.light(fontFamily: fontFamily),
+      darkTheme: AppTheme.dark(fontFamily: fontFamily),
       themeMode: settings.themeMode,
       locale: settings.locale,
       supportedLocales: AppLocalizations.supportedLocales,

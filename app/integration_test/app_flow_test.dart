@@ -1,10 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/services.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:nutrition_app/app.dart';
 import 'package:nutrition_app/core/db/app_database.dart';
 import 'package:nutrition_app/core/db/database_provider.dart';
+import 'package:nutrition_app/core/fonts/app_fonts.dart';
+import 'package:nutrition_app/core/fonts/custom_fonts_repository.dart';
+import 'package:nutrition_app/core/media/media_storage.dart';
 import 'package:nutrition_app/core/settings/app_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,6 +91,33 @@ void main() {
     // 200 g × 102.8 kcal/100 g ≈ 206 kcal.
     expect(find.text(productName), findsOneWidget);
     expect(find.text('206'), findsWidgets);
+
+    // A user font goes through the real engine and becomes the app font.
+    final fonts = CustomFontsRepository(db, MediaStorage(db));
+    final fontBytes = (await rootBundle.load(
+      'assets/fonts/rubik/Rubik-Regular.ttf',
+    )).buffer.asUint8List();
+    final font = await fonts.add(fontBytes, fileName: 'My Rubik.ttf');
+    await tester.tap(find.text('Налаштування'));
+    await settle(tester);
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(MaterialApp)),
+    );
+    await container
+        .read(settingsProvider.notifier)
+        .setFont(customFontId(font.id));
+    await settle(tester, seconds: 2);
+    final title = tester.widget<Text>(find.text('Налаштування').first);
+    expect(title.data, 'Налаштування');
+    expect(
+      Theme.of(tester.element(find.text('Шрифт')))
+          .textTheme
+          .bodyMedium
+          ?.fontFamily,
+      customFontFamily(font.id),
+    );
+    await container.read(settingsProvider.notifier).setFont(defaultFontId);
+    await fonts.delete(font.id);
 
     // Clean up the real database: remove what the test created.
     final products = await (db.select(

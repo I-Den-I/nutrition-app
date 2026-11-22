@@ -34,6 +34,7 @@ const systemMealGroups = ['breakfast', 'lunch', 'dinner', 'snack'];
     DishMealGroups,
     Media,
     MediaBlobs,
+    CustomFonts,
     MealGroups,
     DiaryEntries,
     Profiles,
@@ -61,7 +62,7 @@ class AppDatabase extends _$AppDatabase {
       );
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -73,6 +74,9 @@ class AppDatabase extends _$AppDatabase {
       if (from < 2) {
         await m.createTable(mediaBlobs);
         await m.createIndex(diaryEntriesDay);
+      }
+      if (from < 3) {
+        await m.createTable(customFonts);
       }
     },
     beforeOpen: (details) async {

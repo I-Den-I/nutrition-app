@@ -24,4 +24,5 @@ abstract final class Routes {
   static const settingsProfile = '/settings/profile';
   static const settingsGoals = '/settings/goals';
   static const settingsMealGroups = '/settings/meal-groups';
+  static const settingsFonts = '/settings/fonts';
 }

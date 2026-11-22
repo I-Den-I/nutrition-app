@@ -31,8 +31,7 @@ class LanguageScreen extends ConsumerWidget {
                   const Spacer(),
                   Text(
                     l10n.onboardingChooseLanguage,
-                    style: Theme.of(context).textTheme.headlineMedium
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(

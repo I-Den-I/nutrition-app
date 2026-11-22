@@ -14,6 +14,7 @@ import '../../features/products/presentation/product_screen.dart';
 import '../../features/products/presentation/products_screen.dart';
 import '../../features/profile/presentation/goals_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/settings/presentation/fonts_screen.dart';
 import '../../features/settings/presentation/meal_groups_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/shell/app_shell.dart';
@@ -151,6 +152,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'meal-groups',
                     builder: (_, _) => const MealGroupsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'fonts',
+                    builder: (_, _) => const FontsScreen(),
                   ),
                 ],
               ),
