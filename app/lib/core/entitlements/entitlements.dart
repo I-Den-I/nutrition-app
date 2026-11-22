@@ -3,28 +3,32 @@ import 'package:meta/meta.dart';
 
 enum AppMode { local, cloud }
 
-/// What the current user may do. Screens ask this instead of checking
-/// the mode or subscription themselves, so paid/cloud features can be
-/// switched on later without touching the UI code.
+/// Features that need a server. Everything else works locally for free.
+enum CloudFeature { sync, publicCatalog, publish, comments, ai }
+
+/// What the current user may do.
+///
+/// The app never hard-codes a paywall: in cloud mode the **server** says
+/// which [CloudFeature]s are granted. The official hosted service may sell
+/// some of them; a self-hosted server can simply grant all of them.
+///
+/// Screens ask [can] instead of checking the mode or a subscription.
 @immutable
 class Entitlements {
-  const Entitlements({required this.mode, this.isPremium = false});
+  const Entitlements({required this.mode, this.granted = const {}});
 
   const Entitlements.local() : this(mode: AppMode.local);
 
   final AppMode mode;
-  final bool isPremium;
+  final Set<CloudFeature> granted;
 
   bool get isCloud => mode == AppMode.cloud;
 
-  bool get canSync => isCloud;
-  bool get canBrowsePublicCatalog => isCloud;
-  bool get canPublish => isCloud;
-  bool get canComment => isCloud;
-  bool get canUseAi => isCloud && isPremium;
+  bool can(CloudFeature feature) => isCloud && granted.contains(feature);
 }
 
-/// For now always local. Later: derived from the signed-in account.
+/// Always local for now. Once accounts exist: local until the user signs
+/// in to the server from `backendConfigProvider`, then whatever it grants.
 final entitlementsProvider = Provider<Entitlements>(
   (ref) => const Entitlements.local(),
 );

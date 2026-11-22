@@ -1,163 +1,175 @@
-# Архітектура: застосунок для підрахунку КБЖВ
+# Architecture
 
-> Статус: **v0.3**. Етап 0 (каркас) готовий. Пункти з позначкою ❓ ще відкриті.
+> Status: **v0.4**. Stage 0 (scaffold) is done. Items marked ❓ are still open.
 
-## 0. Прийняті рішення
+## 0. Decisions
 
-| Питання | Рішення |
+| Topic | Decision |
 |---|---|
-| Стек | **Flutter** — одна кодова база для iOS, Android, macOS, Windows, Web/Telegram |
-| Режими | **Локальний** (безкоштовний, без інтернету) і **Хмарний** (акаунт, синхронізація, спільний каталог, соціальні функції, ймовірно платний) |
-| Модерація | Поки що все додається без обмежень. Адмінка, ролі й модерація з'являться разом із хмарним режимом |
-| ШІ | У MVP немає. Швидке введення текстом робиться без ШІ. ШІ пізніше як платна функція |
-| Страви | Є в MVP: КБЖВ на 100 г, на всю страву і внесок кожного продукту |
-| Групи прийомів їжі | Необов'язкові: стандартні (сніданок/обід/вечеря/перекус) + власні |
-| Нутрієнти | КБЖВ обов'язкові, решту (клітковина, цукор, сіль…) користувач вмикає за бажанням |
-| Штрихкоди | Пізніше |
+| License | **AGPL-3.0**: open source; anyone running a modified server for others must publish their changes |
+| Stack | **Flutter**: one codebase for iOS, Android, macOS, Windows and Web/Telegram |
+| Modes | **Local** (offline, everything on the device) and **Cloud** (account, sync, shared catalog, social features) |
+| What is paid | Only access to the **official hosted servers**. The app itself is free, and anyone can self-host a backend |
+| Self-hosting | The backend URL is a build-time setting; the server decides which cloud features are granted |
+| Moderation | For now anything can be added. Admin panel, roles and moderation arrive with the cloud mode |
+| AI | Not in the MVP. Quick text entry works without AI; AI later as a cloud feature |
+| Dishes | In the MVP: macros for the whole dish, per 100 g, and each ingredient's contribution |
+| Meal groups | Optional: built-in (breakfast/lunch/dinner/snack) plus custom ones |
+| Nutrients | Calories, protein, fat and carbs are always tracked; others (fiber, sugar, salt…) are opt-in |
+| Barcodes | Later |
+| Language | Code, docs and PRs in English; the app UI ships in en, uk, ru, de |
 
-## 1. Що робить продукт
+## 1. What the product does
 
-Щодня користувач формує список того, що з'їсть: обирає продукт або страву → вводить грамовку → застосунок рахує порцію і сумує все за день, порівнюючи з ціллю.
+Every day the user builds a list of what they eat: pick a product or dish → enter grams → the app calculates the portion and sums the day against a goal.
 
-Основні сутності:
-- **Продукт**: назва, опис, фото, поживна цінність на 100 г (або 100 мл), опційно порції («1 шт = 60 г»).
-- **Страва**: набір продуктів з грамовкою + (опційно) вага готової страви. Має інформаційну картку: фото, відео, текст; у хмарному режимі ще коментарі й лайки/дизлайки.
-- **Запис у щоденнику**: дата, (опційно) група прийому їжі, продукт або страва, грами.
-- **Профіль і цілі**: стать, вік, зріст, вага, активність, мета → добова норма ккал і БЖВ (або вручну).
+Core entities:
+- **Product**: name, description, photos, nutrients per 100 g (or 100 ml), optional servings ("1 pc = 60 g").
+- **Dish**: a list of products with grams plus an optional cooked weight. Has an info card with photos, video and text; in cloud mode also comments and likes/dislikes.
+- **Diary entry**: day, optional meal group, product or dish, grams.
+- **Profile & goals**: sex, age, height, weight, activity, goal → daily calories and macros (or set manually).
 
-## 2. Два режими роботи
+## 2. Open source, modes and self-hosting
 
 ```
-┌───────────────── Локальний режим ─────────────────┐
-│ Безкоштовно. Усі дані на пристрої (SQLite).       │
-│ Продукти, страви, щоденник, цілі, фото/відео.     │
-└───────────────────────────────────────────────────┘
-                     │  вхід в акаунт
+┌──────────────────── Local mode ────────────────────┐
+│ Free, offline. All data on the device (SQLite).    │
+│ Products, dishes, diary, goals, photos/videos.     │
+└────────────────────────────────────────────────────┘
+                     │  sign in to a backend
                      ▼
-┌───────────────── Хмарний режим ───────────────────┐
-│ Синхронізація між пристроями · спільний каталог   │
-│ продуктів і страв · коментарі, лайки · пропозиції │
-│ страв · ШІ-введення · Telegram Mini App           │
-│ Частина функцій платна (підписка)                  │
-└───────────────────────────────────────────────────┘
+┌──────────────────── Cloud mode ────────────────────┐
+│ Sync between devices · shared catalog of products  │
+│ and dishes · comments, likes · dish suggestions ·  │
+│ AI entry · Telegram Mini App                       │
+│                                                    │
+│ Backend = official hosted service (paid access)    │
+│        or anyone's self-hosted server              │
+└────────────────────────────────────────────────────┘
 ```
 
-Як це закладено в код уже зараз:
-- Локальна БД працює однаково в обох режимах. Хмара лише **додає** синхронізацію поверх неї, тож при вході в акаунт локальні дані просто вивантажуються на сервер.
-- Доступ до функцій перевіряє один сервіс `Entitlements` (`canSync`, `canUseAi`, `canComment`…). Зараз він повертає «локальний режим, усе локальне дозволено». Пізніше відповідь даватиме сервер на основі підписки, а екрани просто показуватимуть або ховатимуть функцію.
-- Оплата пізніше: App Store / Google Play (обов'язково для мобільних), Telegram Stars для TG, Stripe для web/десктопу. ❓
+How this is built into the code:
+- **Everything local is free and open.** The local database works the same in both modes; the cloud only *adds* sync on top. Signing in uploads existing local data instead of replacing it.
+- **Backend is configurable at build time** (`BackendConfig`): `flutter run --dart-define-from-file=config/backend.json`. With no config the app is purely local and makes no network requests. A fork can point at its own server without changing code.
+- **No paywall in the client.** `Entitlements` asks the server which `CloudFeature`s (`sync`, `publicCatalog`, `publish`, `comments`, `ai`) are granted. The official service may charge for them; a self-hosted server can grant all of them.
+- **The backend lives in this repo** (`backend/`: database migrations, server functions) and is built on open-source, self-hostable components, so anyone can run the full stack.
+- Payments (official service only, later): App Store / Google Play, Telegram Stars, Stripe for web/desktop. Payment code stays on the server side and is optional for self-hosters ❓.
 
-## 3. Стек
+## 3. Stack
 
-**Flutter (Dart)** — фреймворк від Google: пишеш застосунок один раз, а він збирається під усі платформи з однаковим виглядом.
+**Flutter (Dart)** builds one codebase for every platform with an identical look.
 
-| Задача | Бібліотека |
+| Concern | Package |
 |---|---|
-| Стан і DI | `flutter_riverpod` |
-| Навігація | `go_router` |
-| Локальна БД | `drift` (SQLite; на web через WASM) |
-| Моделі | `freezed` + `json_serializable` |
-| Локалізація | вбудований `flutter gen-l10n` (ARB-файли) |
-| Фото / відео | `image_picker`, `flutter_image_compress`, `video_player` |
+| State & DI | `flutter_riverpod` |
+| Navigation | `go_router` |
+| Local database | `drift` (SQLite; WASM on the web) |
+| UI components | `material_ui` (Material was split out of the Flutter SDK; do not import `package:flutter/material.dart`) |
+| Models | `freezed` + `json_serializable` |
+| Localization | built-in `flutter gen-l10n` (ARB files) |
+| Photos / video | `image_picker`, `flutter_image_compress`, `video_player` |
 | Telegram | `telegram_web_app` |
-| Графіки (пізніше) | `fl_chart` |
+| Charts (later) | `fl_chart` |
 
-## 4. Шари застосунку
+## 4. Layers
 
 ```
-┌──────────────────────────────────────────────┐
-│ Presentation   екрани, віджети, Riverpod     │
-├──────────────────────────────────────────────┤
-│ Domain         сутності + чисті розрахунки    │
-│                (порція, суми за день, BMR,    │
-│                 страва → на 100 г / на все)   │
-├──────────────────────────────────────────────┤
-│ Data           репозиторії (інтерфейси)       │
-│   ├─ LocalDataSource  (Drift / SQLite)  ← зараз│
-│   └─ RemoteDataSource (API) + Sync      ← потім│
-└──────────────────────────────────────────────┘
+┌───────────────────────────────────────────────┐
+│ Presentation   screens, widgets, Riverpod     │
+├───────────────────────────────────────────────┤
+│ Domain         entities + pure calculations   │
+│                (portion, day totals, BMR,     │
+│                 dish → whole / per 100 g)     │
+├───────────────────────────────────────────────┤
+│ Data           repositories (interfaces)      │
+│   ├─ LocalDataSource  (Drift / SQLite) ← now  │
+│   └─ RemoteDataSource (API) + Sync     ← later│
+└───────────────────────────────────────────────┘
 ```
 
-UI і бізнес-логіка звертаються лише до **інтерфейсів репозиторіїв**. Усі формули знаходяться в domain-шарі й покриті юніт-тестами.
+UI and business logic only talk to **repository interfaces**. All formulas live in the domain layer and are unit-tested.
 
-## 5. Структура репозиторію (монорепо)
+## 5. Repository layout (monorepo)
 
 ```
 nutrition-app/
-├── app/                      # Flutter-клієнт (усі платформи)
+├── app/                      # Flutter client (all platforms)
+│   ├── config/               # backend.example.json (backend.json is git-ignored)
 │   ├── lib/
 │   │   ├── core/
-│   │   │   ├── db/           # Drift: таблиці, міграції
-│   │   │   ├── theme/        # токени кольорів, ThemeData
-│   │   │   ├── l10n/         # arb/ (тексти 4 мовами) + gen/ (згенерований код)
-│   │   │   ├── domain/       # формули: порція, страва, суми
-│   │   │   ├── settings/     # мова, тема, онбординг (налаштування пристрою)
+│   │   │   ├── config/       # BackendConfig (build-time server settings)
+│   │   │   ├── db/           # Drift: tables, migrations
+│   │   │   ├── domain/       # formulas: portion, dish, totals
+│   │   │   ├── entitlements/ # which cloud features are available
+│   │   │   ├── l10n/         # arb/ (strings in 4 languages) + gen/ (generated)
 │   │   │   ├── router/
-│   │   │   ├── entitlements/ # що доступно в поточному режимі
-│   │   │   └── platform/     # Telegram, файли, медіа
+│   │   │   ├── settings/     # language, theme, onboarding (device prefs)
+│   │   │   ├── theme/        # color tokens, ThemeData
+│   │   │   ├── widgets/      # shared widgets
+│   │   │   └── platform/     # Telegram, files, media (later)
 │   │   └── features/
-│   │       ├── onboarding/   # мова, профіль, цілі
+│   │       ├── onboarding/   # language, profile, goals
 │   │       ├── products/
-│   │       ├── dishes/       # страви + інформаційна картка
-│   │       ├── diary/        # день: групи, суми, прогрес
+│   │       ├── dishes/       # dishes + info card
+│   │       ├── diary/        # the day: groups, totals, progress
 │   │       ├── goals/
-│   │       └── settings/     # мова, тема, які нутрієнти показувати
-│   │       (кожна фіча: data/ domain/ presentation/)
-│   ├── web/                  # + sqlite3.wasm, drift_worker.js для БД у браузері
+│   │       └── settings/
+│   │       (each feature: data/ domain/ presentation/)
+│   ├── web/                  # + sqlite3.wasm, drift_worker.js for the web database
 │   └── test/
-├── admin/                    # пізніше: адмін-панель (web)
-├── backend/                  # пізніше: міграції Postgres, серверні функції
+├── admin/                    # later: admin panel (web)
+├── backend/                  # later: Postgres migrations, server functions, docker-compose
 └── docs/
 ```
 
-## 6. Модель даних
+## 6. Data model
 
-Правила для **кожної** таблиці (щоб потім безболісно перейти на сервер):
-- `id` — **UUID v7**, генерується на клієнті;
-- `created_at`, `updated_at`, `deleted_at` (м'яке видалення);
-- поживні значення зберігаються **на 100 г/мл**.
+Rules for **every** syncable table (so moving to a server is painless):
+- `id` is a **UUID v7** generated on the client;
+- `created_at`, `updated_at`, `deleted_at` (soft delete);
+- nutrient values are stored **per 100 g/ml**.
 
-### Продукти і нутрієнти
+### Products and nutrients
 
 ```
 products
   id, owner_id?, visibility (private|public), status (active|pending|rejected)
   name, description, brand?, barcode?
   basis (g|ml)
-  kcal, protein, fat, carbs           -- ядро, завжди заповнене
+  kcal, protein, fat, carbs           -- core, always present
 
-nutrient_definitions                   -- довідник, наповнюється з коду
+nutrient_definitions                   -- catalog, seeded from code
   code ('fiber','sugar','salt','sat_fat','water',…), unit (g|mg|µg|ml), sort_order
 
-product_nutrients                      -- необов'язкові нутрієнти продукту
+product_nutrients                      -- optional nutrients of a product
   product_id, nutrient_code, amount_per_100
 
-product_servings                       -- «1 шт», «1 ст. л.»
+product_servings                       -- "1 pc", "1 tbsp"
   id, product_id, label, grams
 ```
 
-У налаштуваннях користувач обирає, які додаткові нутрієнти показувати (зберігається в `profile.tracked_nutrients`). Новий нутрієнт додається без міграції БД.
+The user picks which optional nutrients to show (`profile.tracked_nutrients`). A new nutrient needs no schema migration.
 
-### Страви
+### Dishes
 
 ```
 dishes
-  id, owner_id?, visibility, name, description (текст/markdown)
-  cooked_weight_g?                     -- вага готової страви
+  id, owner_id?, visibility, name, description (markdown)
+  cooked_weight_g?                     -- weight of the finished dish
 
 dish_items
-  id, dish_id, product_id, grams       -- сирі продукти
+  id, dish_id, product_id, grams       -- raw ingredients
 
-dish_meal_groups                       -- для яких прийомів їжі підходить (майбутні пропозиції)
+dish_meal_groups                       -- which meals it fits (future suggestions)
   dish_id, meal_group_id
 ```
 
-Розрахунок страви (domain):
-- **кожен продукт**: `продукт_на_100 × грами / 100`, показується його внесок;
-- **уся страва**: сума по продуктах;
-- **на 100 г**: `уся_страва / вага × 100`, де вага = `cooked_weight_g`, якщо її вказано, інакше сума ваг сирих продуктів. Так враховується википання і набухання при варінні.
+Dish calculation (domain):
+- **each ingredient**: `per100 × grams / 100`, shown as its contribution;
+- **whole dish**: sum of contributions;
+- **per 100 g**: `whole / weight × 100`, where weight = `cooked_weight_g` if set, otherwise the sum of raw weights. This accounts for water lost or absorbed while cooking.
 
-### Медіа (спільне для продуктів і страв)
+### Media (shared by products and dishes)
 
 ```
 media
@@ -165,86 +177,87 @@ media
   local_path?, remote_url?, thumb_path?, sort_order, width, height, duration_s?
 ```
 
-### Щоденник і групи
+### Diary and meal groups
 
 ```
 meal_groups
   id, system_key? ('breakfast'|'lunch'|'dinner'|'snack'), custom_name?, sort_order, is_hidden
-  -- стандартні групи мають system_key, і їхня назва перекладається;
-  -- власні групи мають custom_name
+  -- built-in groups have a system_key and a translated name;
+  -- custom groups have a custom_name
 
 diary_entries
-  id, date, meal_group_id?, product_id | dish_id, grams
+  id, day (yyyy-MM-dd), meal_group_id?, product_id | dish_id, grams
   snapshot_kcal, snapshot_protein, snapshot_fat, snapshot_carbs
-  snapshot_extra (JSON)                -- знімок значень на момент запису
+  snapshot_extra (JSON)                -- values at logging time
 ```
 
-### Профіль і цілі
+### Profile and goals
 
 ```
-profile        sex, birth_date, height_cm, activity_level, goal, tracked_nutrients
-weight_log     id, date, weight_kg
-goals          kcal, protein, fat, carbs, extra (JSON), mode (auto|manual)
+profile        sex, birth_date, height_cm, activity_level, weight_goal, tracked_nutrients
+weight_log     id, day, weight_kg
+goals          mode (auto|manual), kcal, protein, fat, carbs, extra (JSON)
 ```
 
-Мова, тема й стан онбордингу — це налаштування конкретного пристрою (SharedPreferences), а не профілю, тому вони не синхронізуються.
+Language, theme and onboarding state are per-device preferences (SharedPreferences), not part of the profile, so they are not synced.
 
-Режим auto: BMR за Міффліном-Сан Жеором × коефіцієнт активності ± дефіцит/профіцит → ккал. БЖВ рахуються в г/кг ваги або у відсотках. Будь-яке значення можна перебити вручну.
+Auto mode: BMR via Mifflin-St Jeor × activity factor ± deficit/surplus → calories; macros as g/kg of body weight or percentages. Any value can be overridden manually.
 
-### Лише в хмарному режимі (на сервері)
+### Server-only (cloud mode)
 
 ```
-users, roles (user|moderator|admin), subscriptions
+users, roles (user|moderator|admin), entitlements
 comments       id, target_type (product|dish), target_id, user_id, text
 reactions      target_type, target_id, user_id, value (+1|-1)
-reports        скарги на контент для модерації
+reports        content reports for moderation
 ```
 
-## 7. Локалізація
+## 7. Localization
 
-- Мови на старті: **uk, ru, en, de**. Мова обирається на першому екрані онбордингу, потім її можна змінити в налаштуваннях.
-- Тексти інтерфейсу зберігаються в ARB-файлах, ключі англійською.
-- Числа й дати форматуються за локаллю (у `de` буде «12,5 g»).
-- Назви продуктів і страв — контент користувачів, тому зберігаються як є. Переклади для спільного каталогу додамо в хмарному режимі ❓.
+- Launch languages: **en, uk, ru, de**. Chosen on the first onboarding screen, changeable in settings.
+- UI strings live in ARB files (`app/lib/core/l10n/arb/`), keys in English. Every new string goes into all four files.
+- Numbers and dates are formatted per locale (`de` shows "12,5 g").
+- Product and dish names are user content and are stored as entered. Translations for the shared catalog come with the cloud mode ❓.
 
-## 8. Дизайн-система
+## 8. Design system
 
-- Монохромна палітра: чорний, білий, відтінки сірого; є світла і темна теми.
-- Усі кольори задаються через **токени** (`surface`, `onSurface`, `muted`, `border`, `accent`…). Хардкод-кольорів у віджетах немає.
-- Майбутній «вибір відтінку» — це зміна `accent` у `AppTokens`.
-- Мінімум декору: типографіка, відступи, тонкі роздільники, великі цифри підсумків дня.
+- Monochrome: black, white and greys; light and dark themes.
+- All colors go through **tokens** (`AppTokens`: `background`, `surface`, `border`, `textPrimary`, `accent`…). No hard-coded colors in widgets.
+- A future accent picker only swaps `accent` / `onAccent`.
+- Minimal decoration: typography, spacing, thin dividers, large day-total numbers.
 
-## 9. Медіа-файли
+## 9. Media files
 
-- Фото стискаються (≤1600 px, ~80%), для кожного робиться мініатюра. Відео зберігається як є, з обмеженням розміру/тривалості ❓.
-- Файли лежать у теці застосунку, у БД зберігається лише шлях.
-- У хмарному режимі файли вивантажуються в об'єктне сховище (S3 / Cloudflare R2 / Supabase Storage).
+- Photos are compressed (≤1600 px, ~80%) with a thumbnail. Videos are kept as-is with a size/length limit ❓.
+- Files live in the app folder (or browser storage on the web); the database stores only the path.
+- In cloud mode files are uploaded to S3-compatible object storage.
 
-## 10. Сервер і адмінка (етап «Хмара»)
+## 10. Backend and admin panel (Cloud stage)
 
-- **Supabase** (Postgres + авторизація + сховище файлів + Row Level Security) для старту. Під капотом звичайний Postgres, тому переїзд на власний сервер можливий.
-- **Синхронізація**: offline-first. Локальна БД — джерело правди для UI, фонова синхронізація йде за `updated_at`.
-- **Авторизація**: email / Apple / Google; у Telegram — через `initData` з перевіркою підпису на сервері.
-- **Адмін-панель**: окремий web-застосунок (Flutter web або простий React) з модерацією продуктів і страв, скаргами, користувачами й ролями.
-- Ключі ШІ-сервісів зберігаються **лише на сервері**.
+- **Supabase** (Postgres + auth + storage + Row Level Security) to start: open source and self-hostable via Docker, so the same `backend/` works for the official service and for forks. Under the hood it is plain Postgres, so moving off Supabase stays possible.
+- **Sync**: offline-first. The local database is the source of truth for the UI; background sync by `updated_at`.
+- **Auth**: email / Apple / Google; in Telegram via `initData`, verified on the server.
+- **Admin panel**: separate web app for moderating products and dishes, reports, users and roles.
+- **Entitlements**: a server-side table/function returns the granted `CloudFeature`s. Billing integration plugs in here for the official service only.
+- Secrets (AI keys, payment keys) live **only on the server**, never in the client or the repo.
 
 ## 11. Telegram Mini App
 
-- Та сама Flutter web-збірка плюс адаптер `core/platform/telegram` (тема, кнопка «назад», MainButton, haptics).
-- Telegram може очищати локальне сховище, тому TG-версія буде частиною **хмарного режиму**.
+- The same Flutter web build plus a `core/platform/telegram` adapter (theme, back button, MainButton, haptics).
+- Telegram may wipe local web storage, so the TG version is part of the **cloud mode**.
 
-## 12. Швидке введення (без ШІ)
+## 12. Quick text entry (no AI)
 
-Рядок `курка 200, рис 150, олія 10` → парсер «назва + число (+ г/мл/шт)» → нечіткий пошук по своїх продуктах і стравах → екран підтвердження, де можна поправити збіги → записи в щоденник.
+`chicken 200, rice 150, oil 10` → parser for "name + number (+ g/ml/pc)" → fuzzy search in the user's products and dishes → confirmation screen to fix matches → diary entries.
 
-ШІ-версія (вільний текст, фото тарілки) з'явиться пізніше як платна функція хмарного режиму.
+An AI version (free text, plate photo) comes later as a cloud feature.
 
-## 13. Дорожня карта
+## 13. Roadmap
 
-| Етап | Зміст |
+| Stage | Scope |
 |---|---|
-| 0. Каркас ✅ | Flutter-проєкт, тема (токени, світла/темна), l10n (4 мови), Drift, роутер, `Entitlements` |
-| 1. MVP | Онбординг (мова, профіль, цілі) · продукти (CRUD, фото, опис, додаткові нутрієнти) · страви з розрахунком · щоденник дня з групами, сумами та прогресом |
-| 2. Зручність | Швидке введення текстом · порції «шт» · відео в картках · історія, графік ваги |
-| 3. Хмара | Акаунти · синхронізація · спільний каталог · адмінка і модерація · коментарі/лайки · підписка |
-| 4. Розширення | TG Mini App · ШІ-введення · пропозиції страв по групах · сканер штрихкодів (Open Food Facts) · вибір відтінку теми |
+| 0. Scaffold ✅ | Flutter project, theme (tokens, light/dark), l10n (4 languages), Drift, router, `Entitlements`, `BackendConfig` |
+| 1. MVP | Onboarding (language, profile, goals) · products (CRUD, photos, description, optional nutrients) · dishes with calculation · day diary with groups, totals and progress |
+| 2. Comfort | Quick text entry · "pc" servings · videos in cards · history, weight chart |
+| 3. Cloud | Accounts · sync · shared catalog · admin panel and moderation · comments/likes · entitlements · self-hosting guide |
+| 4. Extensions | TG Mini App · AI entry · meal suggestions by group · barcode scanner (Open Food Facts) · accent picker |

@@ -1,8 +1,10 @@
 # Nutrition app
 
-Cross-platform calorie/macro (КБЖВ) tracker. Architecture and product decisions: `docs/ARCHITECTURE.md` — read it before larger changes and keep it updated.
+Cross-platform calorie and macro tracker. Architecture and product decisions: `docs/ARCHITECTURE.md` — read it before larger changes and keep it updated.
 
-The owner is not a programmer: talk to them in Ukrainian, in plain words.
+Open source (AGPL-3.0). The app is free; only access to the official hosted servers is paid. Anyone must be able to fork and connect their own backend.
+
+The owner is not a programmer: talk to them in Ukrainian, in plain words. Code, comments, docs, commits and PRs are in English.
 
 ## Layout
 
@@ -24,6 +26,7 @@ The owner is not a programmer: talk to them in Ukrainian, in plain words.
 - No hard-coded UI strings: add keys to all four ARB files in `lib/core/l10n/arb/` (en, uk, ru, de) and use `context.l10n`.
 - Nutrition math lives in `lib/core/domain/` as pure Dart with tests; screens never compute macros themselves.
 - Every syncable table uses the `SyncColumns` mixin (UUID v7 id, timestamps, soft delete). Never hard-delete user data; set `deletedAt`.
-- Gate cloud/paid features through `entitlementsProvider`, not by checking the mode directly.
+- Gate cloud features through `ref.watch(entitlementsProvider).can(CloudFeature.x)`; never hard-code a paywall in the client. The server decides what is granted.
+- Server URLs and keys come only from `BackendConfig` (`--dart-define-from-file`), never hard-coded. No secrets in the client or the repo.
 - Feature code goes under `lib/features/<feature>/{data,domain,presentation}`.
 - Generated files (`*.g.dart`, `lib/core/l10n/gen/`) are committed.
