@@ -1,0 +1,4 @@
+{
+  "BACKEND_URL": "https://your-project.example.com",
+  "BACKEND_PUBLIC_KEY": "public-anon-key"
+}

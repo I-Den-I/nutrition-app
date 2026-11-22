@@ -1,0 +1,45 @@
+{
+  "@@locale": "en",
+  "appTitle": "Nutrition",
+  "navDiary": "Diary",
+  "navProducts": "Products",
+  "navDishes": "Dishes",
+  "navSettings": "Settings",
+
+  "onboardingChooseLanguage": "Choose your language",
+  "onboardingLanguageHint": "You can change it later in settings.",
+  "actionContinue": "Continue",
+
+  "emptyProducts": "No products yet",
+  "emptyDishes": "No dishes yet",
+  "emptyDiary": "Nothing logged today",
+  "comingSoon": "Coming soon",
+
+  "today": "Today",
+  "dayTotal": "Day total",
+
+  "nutrientKcal": "kcal",
+  "nutrientProtein": "Protein",
+  "nutrientFat": "Fat",
+  "nutrientCarbs": "Carbs",
+  "nutrientFiber": "Fiber",
+  "nutrientSugar": "Sugar",
+  "nutrientSatFat": "Saturated fat",
+  "nutrientSalt": "Salt",
+  "nutrientWater": "Water",
+  "unitGram": "g",
+
+  "mealBreakfast": "Breakfast",
+  "mealLunch": "Lunch",
+  "mealDinner": "Dinner",
+  "mealSnack": "Snack",
+
+  "settingsLanguage": "Language",
+  "settingsTheme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsMode": "Mode",
+  "modeLocal": "Local — data stays on this device",
+  "modeCloud": "Cloud"
+}

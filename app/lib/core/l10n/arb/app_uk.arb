@@ -1,0 +1,45 @@
+{
+  "@@locale": "uk",
+  "appTitle": "Харчування",
+  "navDiary": "Щоденник",
+  "navProducts": "Продукти",
+  "navDishes": "Страви",
+  "navSettings": "Налаштування",
+
+  "onboardingChooseLanguage": "Оберіть мову",
+  "onboardingLanguageHint": "Її можна змінити пізніше в налаштуваннях.",
+  "actionContinue": "Далі",
+
+  "emptyProducts": "Продуктів ще немає",
+  "emptyDishes": "Страв ще немає",
+  "emptyDiary": "Сьогодні ще нічого не додано",
+  "comingSoon": "Скоро буде",
+
+  "today": "Сьогодні",
+  "dayTotal": "Разом за день",
+
+  "nutrientKcal": "ккал",
+  "nutrientProtein": "Білки",
+  "nutrientFat": "Жири",
+  "nutrientCarbs": "Вуглеводи",
+  "nutrientFiber": "Клітковина",
+  "nutrientSugar": "Цукор",
+  "nutrientSatFat": "Насичені жири",
+  "nutrientSalt": "Сіль",
+  "nutrientWater": "Вода",
+  "unitGram": "г",
+
+  "mealBreakfast": "Сніданок",
+  "mealLunch": "Обід",
+  "mealDinner": "Вечеря",
+  "mealSnack": "Перекус",
+
+  "settingsLanguage": "Мова",
+  "settingsTheme": "Тема",
+  "themeSystem": "Системна",
+  "themeLight": "Світла",
+  "themeDark": "Темна",
+  "settingsMode": "Режим",
+  "modeLocal": "Локальний — дані лише на цьому пристрої",
+  "modeCloud": "Хмарний"
+}

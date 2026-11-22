@@ -1,0 +1,45 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Питание",
+  "navDiary": "Дневник",
+  "navProducts": "Продукты",
+  "navDishes": "Блюда",
+  "navSettings": "Настройки",
+
+  "onboardingChooseLanguage": "Выберите язык",
+  "onboardingLanguageHint": "Его можно изменить позже в настройках.",
+  "actionContinue": "Далее",
+
+  "emptyProducts": "Продуктов пока нет",
+  "emptyDishes": "Блюд пока нет",
+  "emptyDiary": "Сегодня ещё ничего не добавлено",
+  "comingSoon": "Скоро будет",
+
+  "today": "Сегодня",
+  "dayTotal": "Итого за день",
+
+  "nutrientKcal": "ккал",
+  "nutrientProtein": "Белки",
+  "nutrientFat": "Жиры",
+  "nutrientCarbs": "Углеводы",
+  "nutrientFiber": "Клетчатка",
+  "nutrientSugar": "Сахар",
+  "nutrientSatFat": "Насыщенные жиры",
+  "nutrientSalt": "Соль",
+  "nutrientWater": "Вода",
+  "unitGram": "г",
+
+  "mealBreakfast": "Завтрак",
+  "mealLunch": "Обед",
+  "mealDinner": "Ужин",
+  "mealSnack": "Перекус",
+
+  "settingsLanguage": "Язык",
+  "settingsTheme": "Тема",
+  "themeSystem": "Системная",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "settingsMode": "Режим",
+  "modeLocal": "Локальный — данные только на этом устройстве",
+  "modeCloud": "Облачный"
+}
