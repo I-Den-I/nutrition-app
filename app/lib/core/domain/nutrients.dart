@@ -62,7 +62,9 @@ class Nutrients {
     protein,
     fat,
     carbs,
-    Object.hashAllUnordered(extra.entries.map((e) => Object.hash(e.key, e.value))),
+    Object.hashAllUnordered(
+      extra.entries.map((e) => Object.hash(e.key, e.value)),
+    ),
   );
 
   @override

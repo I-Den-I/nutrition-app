@@ -24,6 +24,38 @@ class NutritionApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: appLocalizationsDelegates,
       routerConfig: router,
+      // Tapping outside a text field closes the keyboard. Needed on iOS,
+      // where the number pad has no "Done" key.
+      builder: (context, child) => GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: ScrollConfiguration(
+          behavior: const _DismissKeyboardOnScroll(),
+          child: child!,
+        ),
+      ),
+    );
+  }
+}
+
+/// Closes the keyboard when the user starts scrolling a list.
+class _DismissKeyboardOnScroll extends MaterialScrollBehavior {
+  const _DismissKeyboardOnScroll();
+
+  @override
+  Widget buildScrollbar(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
+    return NotificationListener<ScrollStartNotification>(
+      onNotification: (n) {
+        if (n.dragDetails != null) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+        return false;
+      },
+      child: super.buildScrollbar(context, child, details),
     );
   }
 }

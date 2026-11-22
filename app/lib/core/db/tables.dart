@@ -22,10 +22,12 @@ mixin SyncColumns on Table {
 
 class Products extends Table with SyncColumns {
   TextColumn get ownerId => text().nullable()();
-  TextColumn get visibility =>
-      textEnum<ContentVisibility>().withDefault(Constant(ContentVisibility.private.name))();
-  TextColumn get status => textEnum<ModerationStatus>()
-      .withDefault(Constant(ModerationStatus.active.name))();
+  TextColumn get visibility => textEnum<ContentVisibility>().withDefault(
+    Constant(ContentVisibility.private.name),
+  )();
+  TextColumn get status => textEnum<ModerationStatus>().withDefault(
+    Constant(ModerationStatus.active.name),
+  )();
 
   TextColumn get name => text().withLength(min: 1, max: 200)();
   TextColumn get description => text().nullable()();
@@ -73,10 +75,12 @@ class ProductServings extends Table with SyncColumns {
 
 // ───────────────────────── Dishes ─────────────────────────
 
+@DataClassName('Dish')
 class Dishes extends Table with SyncColumns {
   TextColumn get ownerId => text().nullable()();
-  TextColumn get visibility =>
-      textEnum<ContentVisibility>().withDefault(Constant(ContentVisibility.private.name))();
+  TextColumn get visibility => textEnum<ContentVisibility>().withDefault(
+    Constant(ContentVisibility.private.name),
+  )();
   TextColumn get name => text().withLength(min: 1, max: 200)();
   TextColumn get description => text().nullable()(); // markdown
 
@@ -117,6 +121,17 @@ class Media extends Table with SyncColumns {
   RealColumn get durationS => real().nullable()();
 }
 
+/// Photo bytes on platforms without a writable file system (web).
+/// Native platforms keep files on disk; see `MediaStorage`.
+/// Device-local cache, never synced.
+class MediaBlobs extends Table {
+  TextColumn get key => text()();
+  BlobColumn get bytes => blob()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {key};
+}
+
 // ───────────────────────── Diary ─────────────────────────
 
 /// Built-in groups have a [systemKey] (translated in the UI);
@@ -128,11 +143,11 @@ class MealGroups extends Table with SyncColumns {
   BoolColumn get isHidden => boolean().withDefault(const Constant(false))();
 }
 
+@TableIndex(name: 'diary_entries_day', columns: {#day})
 class DiaryEntries extends Table with SyncColumns {
   /// Local calendar day as `yyyy-MM-dd` — independent of time zones.
   TextColumn get day => text().withLength(min: 10, max: 10)();
-  TextColumn get mealGroupId =>
-      text().nullable().references(MealGroups, #id)();
+  TextColumn get mealGroupId => text().nullable().references(MealGroups, #id)();
   TextColumn get productId => text().nullable().references(Products, #id)();
   TextColumn get dishId => text().nullable().references(Dishes, #id)();
   RealColumn get grams => real()();
@@ -167,6 +182,7 @@ class Profiles extends Table with SyncColumns {
       text().withDefault(const Constant('["fiber"]'))();
 }
 
+@DataClassName('WeightEntry')
 class WeightLog extends Table with SyncColumns {
   TextColumn get day => text().withLength(min: 10, max: 10)();
   RealColumn get weightKg => real()();

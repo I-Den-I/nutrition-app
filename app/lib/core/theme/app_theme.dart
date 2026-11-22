@@ -79,7 +79,9 @@ abstract final class AppTheme {
           backgroundColor: t.accent,
           foregroundColor: t.onAccent,
           minimumSize: const Size.fromHeight(52),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -94,6 +96,66 @@ abstract final class AppTheme {
           selectedForegroundColor: t.onAccent,
           side: BorderSide(color: t.border),
         ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: false,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.textPrimary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.danger),
+        ),
+        labelStyle: TextStyle(color: t.textSecondary),
+        floatingLabelStyle: TextStyle(color: t.textPrimary),
+        helperStyle: TextStyle(color: t.textSecondary),
+        suffixStyle: TextStyle(color: t.textSecondary),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: t.background,
+        selectedColor: t.accent,
+        labelStyle: WidgetStateTextStyle.resolveWith(
+          (s) => TextStyle(
+            color: s.contains(WidgetState.selected)
+                ? t.onAccent
+                : t.textPrimary,
+          ),
+        ),
+        secondaryLabelStyle: TextStyle(color: t.onAccent),
+        side: BorderSide(color: t.border),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (s) =>
+              s.contains(WidgetState.selected) ? t.onAccent : t.textSecondary,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.accent : t.surfaceMuted,
+        ),
+        trackOutlineColor: WidgetStatePropertyAll(t.border),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: t.textPrimary,
+        contentTextStyle: TextStyle(color: t.background),
+        behavior: SnackBarBehavior.floating,
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: t.background,
+        surfaceTintColor: Colors.transparent,
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: t.background,
+        surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
         color: t.surface,

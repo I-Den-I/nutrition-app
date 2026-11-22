@@ -3,12 +3,7 @@ import 'package:nutrition_app/core/domain/dish_calculator.dart';
 import 'package:nutrition_app/core/domain/nutrients.dart';
 
 void main() {
-  const chicken = Nutrients(
-    kcal: 165,
-    protein: 31,
-    fat: 3.6,
-    carbs: 0,
-  );
+  const chicken = Nutrients(kcal: 165, protein: 31, fat: 3.6, carbs: 0);
   const rice = Nutrients(
     kcal: 360,
     protein: 7,

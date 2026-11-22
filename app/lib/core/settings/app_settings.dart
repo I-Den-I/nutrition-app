@@ -57,7 +57,8 @@ class SettingsController extends Notifier<AppSettings> {
     final prefs = ref.watch(sharedPreferencesProvider);
     return AppSettings(
       languageCode: prefs.getString(_kLanguage) ?? _systemLanguage(),
-      themeMode: ThemeMode.values.asNameMap()[prefs.getString(_kTheme)] ??
+      themeMode:
+          ThemeMode.values.asNameMap()[prefs.getString(_kTheme)] ??
           ThemeMode.system,
       onboardingDone: prefs.getBool(_kOnboarding) ?? false,
     );

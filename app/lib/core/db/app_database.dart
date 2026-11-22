@@ -3,6 +3,7 @@ import 'package:drift_flutter/drift_flutter.dart';
 
 import 'enums.dart';
 import 'ids.dart';
+import 'memory_connection.dart';
 import 'tables.dart';
 
 export 'enums.dart';
@@ -32,6 +33,7 @@ const systemMealGroups = ['breakfast', 'lunch', 'dinner', 'snack'];
     DishItems,
     DishMealGroups,
     Media,
+    MediaBlobs,
     MealGroups,
     DiaryEntries,
     Profiles,
@@ -43,26 +45,35 @@ class AppDatabase extends _$AppDatabase {
   /// Use a custom executor (e.g. in-memory) — handy for tests.
   AppDatabase(super.e);
 
-  /// The real on-device database for every platform.
+  /// The real on-device database for every platform, or a throw-away
+  /// in-memory one with `--dart-define=IN_MEMORY_DB=true`.
   AppDatabase.defaults()
     : super(
-        driftDatabase(
-          name: 'nutrition',
-          web: DriftWebOptions(
-            sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-            driftWorker: Uri.parse('drift_worker.js'),
-          ),
-        ),
+        const bool.fromEnvironment('IN_MEMORY_DB')
+            ? inMemoryExecutor()
+            : driftDatabase(
+                name: 'nutrition',
+                web: DriftWebOptions(
+                  sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+                  driftWorker: Uri.parse('drift_worker.js'),
+                ),
+              ),
       );
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
       await _seed();
+    },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.createTable(mediaBlobs);
+        await m.createIndex(diaryEntriesDay);
+      }
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
