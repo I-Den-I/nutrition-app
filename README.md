@@ -4,7 +4,7 @@ A minimal, open-source calorie and macro tracker for iOS, Android, macOS, Window
 
 Log what you eat in grams and the app calculates each portion and the day's totals of calories, protein, fat, carbs and any extra nutrients you choose to track. Products and dishes live in your own database with descriptions and photos.
 
-> **Status:** early development. The app scaffold is in place; the MVP (products, dishes, diary, goals) is next. See the [roadmap](docs/ARCHITECTURE.md#13-roadmap).
+> **Status:** early development. The local MVP works: onboarding with goals, products with photos, dishes with calculation, and a daily diary. See the [roadmap](docs/ARCHITECTURE.md#13-roadmap).
 
 ## Principles
 
@@ -37,7 +37,14 @@ Tests and checks:
 
 ```sh
 flutter analyze
-flutter test
+flutter test                              # unit tests
+flutter test integration_test -d macos    # end-to-end flow (or an iOS simulator id)
+```
+
+To try the app without keeping data (e.g. in embedded browsers that block shared workers), use a throw-away in-memory database:
+
+```sh
+flutter run -d chrome --dart-define=IN_MEMORY_DB=true
 ```
 
 After changing database tables run `dart run build_runner build`. After changing UI strings in `lib/core/l10n/arb/` run `flutter gen-l10n`.
@@ -52,6 +59,10 @@ flutter run --dart-define-from-file=config/backend.json
 ```
 
 `config/backend.json` is git-ignored. Only public, client-safe values belong there; secrets stay on the server. Which cloud features are available is decided by the server, so a self-hosted instance can enable all of them. The backend and a self-hosting guide arrive with the cloud stage of the roadmap.
+
+## Fonts
+
+The app ships with Comfortaa (default), Nunito, Manrope, Inter and Rubik, all under the [SIL Open Font License](https://openfontlicense.org) (license files next to each font in `app/assets/fonts`). Users can also pick the platform font or add their own TTF/OTF file (up to 5 MB) in Settings → Font; files are validated before use and stay on the device.
 
 ## Translations
 

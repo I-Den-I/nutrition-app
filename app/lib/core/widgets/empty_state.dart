@@ -30,9 +30,3 @@ class EmptyState extends StatelessWidget {
     );
   }
 }
-
-void showComingSoon(BuildContext context, String text) {
-  ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text(text)));
-}

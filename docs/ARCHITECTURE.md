@@ -1,6 +1,6 @@
 # Architecture
 
-> Status: **v0.4**. Stage 0 (scaffold) is done. Items marked ❓ are still open.
+> Status: **v0.5**. Stages 0 (scaffold) and 1 (MVP) are done. Items marked ❓ are still open.
 
 ## 0. Decisions
 
@@ -203,6 +203,10 @@ Language, theme and onboarding state are per-device preferences (SharedPreferenc
 
 Auto mode: BMR via Mifflin-St Jeor × activity factor ± deficit/surplus → calories; macros as g/kg of body weight or percentages. Any value can be overridden manually.
 
+All queries go through drift's typed, parameterized API; the only raw statement is a constant `PRAGMA`.
+
+Schema changes bump `schemaVersion` in `AppDatabase` with a step in `onUpgrade`; `test/db/migration_test.dart` checks upgrades.
+
 ### Server-only (cloud mode)
 
 ```
@@ -224,12 +228,14 @@ reports        content reports for moderation
 - Monochrome: black, white and greys; light and dark themes.
 - All colors go through **tokens** (`AppTokens`: `background`, `surface`, `border`, `textPrimary`, `accent`…). No hard-coded colors in widgets.
 - A future accent picker only swaps `accent` / `onAccent`.
+- **Fonts**: Comfortaa by default (bold body text, like rounded "app" typography), plus Nunito, Manrope, Inter, Rubik and the platform font. All bundled as static 400/600/700 files (`app/assets/fonts`, SIL Open Font License) so the app needs no network for fonts.
+- **User fonts**: TTF/OTF up to 5 MB, picked with `file_selector`. Before anything is stored the file is checked (`font_validator.dart`): size, sfnt magic (collections/WOFF rejected), table directory bounds, required tables, `head` magic. It is saved under a random key with an extension derived from the content, never from the user's file name, and registered with the engine under our own family name `custom-<uuid>`; if the engine rejects it, the stored file is removed. Display names are stripped of control and bidi characters. Fonts are device-local (`custom_fonts` table), not synced.
 - Minimal decoration: typography, spacing, thin dividers, large day-total numbers.
 
 ## 9. Media files
 
 - Photos are compressed (≤1600 px, ~80%) with a thumbnail. Videos are kept as-is with a size/length limit ❓.
-- Files live in the app folder (or browser storage on the web); the database stores only the path.
+- `MediaStorage` keeps files in the app support folder on native platforms and in the `media_blobs` table on the web (browsers have no writable file system); `media.local_path` stores the key.
 - In cloud mode files are uploaded to S3-compatible object storage.
 
 ## 10. Backend and admin panel (Cloud stage)
@@ -257,7 +263,7 @@ An AI version (free text, plate photo) comes later as a cloud feature.
 | Stage | Scope |
 |---|---|
 | 0. Scaffold ✅ | Flutter project, theme (tokens, light/dark), l10n (4 languages), Drift, router, `Entitlements`, `BackendConfig` |
-| 1. MVP | Onboarding (language, profile, goals) · products (CRUD, photos, description, optional nutrients) · dishes with calculation · day diary with groups, totals and progress |
+| 1. MVP ✅ | Onboarding (language, profile, goals) · products (CRUD, photos, description, optional nutrients) · dishes with calculation · day diary with groups, totals and progress |
 | 2. Comfort | Quick text entry · "pc" servings · videos in cards · history, weight chart |
 | 3. Cloud | Accounts · sync · shared catalog · admin panel and moderation · comments/likes · entitlements · self-hosting guide |
 | 4. Extensions | TG Mini App · AI entry · meal suggestions by group · barcode scanner (Open Food Facts) · accent picker |

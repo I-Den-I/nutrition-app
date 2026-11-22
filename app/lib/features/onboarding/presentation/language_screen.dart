@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../core/l10n/l10n.dart';
+import '../../../core/router/routes.dart';
 import '../../../core/settings/app_settings.dart';
 import '../../../core/theme/app_tokens.dart';
 
@@ -29,9 +31,7 @@ class LanguageScreen extends ConsumerWidget {
                   const Spacer(),
                   Text(
                     l10n.onboardingChooseLanguage,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -53,7 +53,7 @@ class LanguageScreen extends ConsumerWidget {
                     ),
                   const Spacer(flex: 2),
                   FilledButton(
-                    onPressed: controller.completeOnboarding,
+                    onPressed: () => context.push(Routes.onboardingProfile),
                     child: Text(l10n.actionContinue),
                   ),
                 ],

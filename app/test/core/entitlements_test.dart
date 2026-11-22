@@ -11,10 +11,7 @@ void main() {
   });
 
   test('cloud mode grants only what the server returned', () {
-    const e = Entitlements(
-      mode: AppMode.cloud,
-      granted: {CloudFeature.sync},
-    );
+    const e = Entitlements(mode: AppMode.cloud, granted: {CloudFeature.sync});
     expect(e.can(CloudFeature.sync), isTrue);
     expect(e.can(CloudFeature.ai), isFalse);
   });

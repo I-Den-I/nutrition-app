@@ -13,11 +13,13 @@ The owner is not a programmer: talk to them in Ukrainian, in plain words. Code, 
 
 ## Commands (run in `app/`)
 
-- `flutter test` — unit tests (domain formulas, database).
+- `flutter test` — unit tests (domain formulas, database, migrations).
+- `flutter test integration_test -d macos` (or `-d <simulator id>`) — end-to-end UI flow on a real device with the real database. Widget tests with drift + fake async hang; put UI flows here instead.
 - `flutter analyze` — must stay clean.
 - `dart run build_runner build` — after changing drift tables (`lib/core/db/tables.dart`).
 - `flutter gen-l10n` — after changing ARB files (also runs automatically on build).
 - `flutter build web` → `app/build/web` (needs `sqlite3.wasm` + `drift_worker.js` already in `app/web/`).
+- UI checks in Claude's built-in browser pane: its shared workers cannot fetch, so the persistent web database hangs there. Build with `--dart-define=IN_MEMORY_DB=true` (e.g. `--output build/web-demo`) and serve that folder instead.
 
 ## Conventions
 
@@ -30,3 +32,9 @@ The owner is not a programmer: talk to them in Ukrainian, in plain words. Code, 
 - Server URLs and keys come only from `BackendConfig` (`--dart-define-from-file`), never hard-coded. No secrets in the client or the repo.
 - Feature code goes under `lib/features/<feature>/{data,domain,presentation}`.
 - Generated files (`*.g.dart`, `lib/core/l10n/gen/`) are committed.
+- Schema change → bump `schemaVersion`, add an `onUpgrade` step, extend `test/db/migration_test.dart`.
+- iOS number pads have no "Done" key: the app-level tap/scroll handler in `app.dart` closes the keyboard; keep it.
+- Component themes in `app_theme.dart` must use plain `TextStyle`s that carry `fontFamily` (copy from the text theme). A `WidgetStateTextStyle` loses the font when widgets merge styles, and the chips fell back to the system font.
+- User-provided files (fonts, photos) are validated by content, stored under our own random key and never used to build paths, family names or SQL.
+- Every `FloatingActionButton` needs `heroTag: null` (tabs live side by side in an IndexedStack).
+- Shared UI pieces live in `lib/core/widgets/` (`NumberField`, `SelectChip`, `NutrientsPanel`, `PhotoEditor`…); reuse them before writing new ones.

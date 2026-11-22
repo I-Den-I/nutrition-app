@@ -3,11 +3,56 @@ import 'package:material_ui/material_ui.dart';
 import 'app_tokens.dart';
 
 /// Builds a minimal monochrome [ThemeData] from [AppTokens].
-abstract final class AppTheme {
-  static ThemeData light() => _build(AppTokens.light, Brightness.light);
-  static ThemeData dark() => _build(AppTokens.dark, Brightness.dark);
+/// Fonts whose regular weight looks too light for body text.
+const _thinFonts = {'Comfortaa'};
 
-  static ThemeData _build(AppTokens t, Brightness brightness) {
+/// Whether [family] gets heavier default weights (see [_heavier]).
+bool isThinFont(String? family) => _thinFonts.contains(family);
+
+extension StrongWeight on BuildContext {
+  /// Weight for emphasized numbers and labels: bold for thin fonts,
+  /// semi-bold otherwise.
+  FontWeight get strongWeight =>
+      _thinFonts.contains(Theme.of(this).textTheme.bodyMedium?.fontFamily)
+      ? FontWeight.w700
+      : FontWeight.w600;
+}
+
+/// Body text semi-bold, headings bold.
+TextTheme _heavier(TextTheme t) {
+  TextStyle? w(TextStyle? s, FontWeight weight) =>
+      s?.copyWith(fontWeight: weight);
+  return t.copyWith(
+    displayLarge: w(t.displayLarge, FontWeight.w700),
+    displayMedium: w(t.displayMedium, FontWeight.w700),
+    displaySmall: w(t.displaySmall, FontWeight.w700),
+    headlineLarge: w(t.headlineLarge, FontWeight.w700),
+    headlineMedium: w(t.headlineMedium, FontWeight.w700),
+    headlineSmall: w(t.headlineSmall, FontWeight.w700),
+    titleLarge: w(t.titleLarge, FontWeight.w700),
+    titleMedium: w(t.titleMedium, FontWeight.w700),
+    titleSmall: w(t.titleSmall, FontWeight.w700),
+    bodyLarge: w(t.bodyLarge, FontWeight.w700),
+    bodyMedium: w(t.bodyMedium, FontWeight.w700),
+    bodySmall: w(t.bodySmall, FontWeight.w600),
+    labelLarge: w(t.labelLarge, FontWeight.w700),
+    labelMedium: w(t.labelMedium, FontWeight.w600),
+    labelSmall: w(t.labelSmall, FontWeight.w600),
+  );
+}
+
+abstract final class AppTheme {
+  /// [fontFamily] null = platform font.
+  static ThemeData light({String? fontFamily}) =>
+      _build(AppTokens.light, Brightness.light, fontFamily);
+  static ThemeData dark({String? fontFamily}) =>
+      _build(AppTokens.dark, Brightness.dark, fontFamily);
+
+  static ThemeData _build(
+    AppTokens t,
+    Brightness brightness,
+    String? fontFamily,
+  ) {
     final scheme = ColorScheme(
       brightness: brightness,
       primary: t.accent,
@@ -33,24 +78,29 @@ abstract final class AppTheme {
     final base = ThemeData(
       useMaterial3: true,
       brightness: brightness,
+      fontFamily: fontFamily,
       colorScheme: scheme,
       scaffoldBackgroundColor: t.background,
       splashFactory: NoSplash.splashFactory,
       extensions: [t],
     );
 
-    final text = base.textTheme.apply(
+    final applied = base.textTheme.apply(
       bodyColor: t.textPrimary,
       displayColor: t.textPrimary,
     );
+    final headingWeight = _thinFonts.contains(fontFamily)
+        ? FontWeight.w700
+        : FontWeight.w600;
+    final text = _thinFonts.contains(fontFamily) ? _heavier(applied) : applied;
 
     return base.copyWith(
       textTheme: text.copyWith(
         displaySmall: text.displaySmall?.copyWith(
-          fontWeight: FontWeight.w600,
+          fontWeight: headingWeight,
           letterSpacing: -1,
         ),
-        titleLarge: text.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+        titleLarge: text.titleLarge?.copyWith(fontWeight: headingWeight),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: t.background,
@@ -68,6 +118,18 @@ abstract final class AppTheme {
         elevation: 0,
         height: 64,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        // Tight labels so long words ("Налаштування", "Einstellungen")
+        // fit on one line even with wide fonts.
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (s) => (text.labelSmall ?? const TextStyle()).copyWith(
+            fontFamily: fontFamily,
+            fontSize: 11,
+            letterSpacing: 0,
+            color: s.contains(WidgetState.selected)
+                ? t.textPrimary
+                : t.textSecondary,
+          ),
+        ),
       ),
       navigationRailTheme: NavigationRailThemeData(
         backgroundColor: t.background,
@@ -79,7 +141,9 @@ abstract final class AppTheme {
           backgroundColor: t.accent,
           foregroundColor: t.onAccent,
           minimumSize: const Size.fromHeight(52),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
       listTileTheme: ListTileThemeData(
@@ -94,6 +158,75 @@ abstract final class AppTheme {
           selectedForegroundColor: t.onAccent,
           side: BorderSide(color: t.border),
         ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: false,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.textPrimary, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: t.danger),
+        ),
+        labelStyle: TextStyle(color: t.textSecondary, fontFamily: fontFamily),
+        floatingLabelStyle: TextStyle(
+          color: t.textPrimary,
+          fontFamily: fontFamily,
+        ),
+        helperStyle: TextStyle(color: t.textSecondary, fontFamily: fontFamily),
+        suffixStyle: TextStyle(color: t.textSecondary, fontFamily: fontFamily),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: t.background,
+        selectedColor: t.accent,
+        // A plain style: chips merge it with their own, and a
+        // WidgetStateTextStyle would lose the font family there.
+        // Selected colors are set by SelectChip.
+        labelStyle: (text.labelLarge ?? const TextStyle()).copyWith(
+          fontFamily: fontFamily,
+          color: t.textPrimary,
+        ),
+        secondaryLabelStyle: TextStyle(
+          color: t.onAccent,
+          fontFamily: fontFamily,
+        ),
+        side: BorderSide(color: t.border),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (s) =>
+              s.contains(WidgetState.selected) ? t.onAccent : t.textSecondary,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? t.accent : t.surfaceMuted,
+        ),
+        trackOutlineColor: WidgetStatePropertyAll(t.border),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: t.textPrimary,
+        contentTextStyle: (text.bodyMedium ?? const TextStyle()).copyWith(
+          fontFamily: fontFamily,
+          color: t.background,
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: t.background,
+        surfaceTintColor: Colors.transparent,
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: t.background,
+        surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
         color: t.surface,

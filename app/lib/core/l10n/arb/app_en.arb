@@ -5,19 +5,102 @@
   "navProducts": "Products",
   "navDishes": "Dishes",
   "navSettings": "Settings",
-
+  "actionContinue": "Continue",
+  "actionSave": "Save",
+  "actionCancel": "Cancel",
+  "actionDelete": "Delete",
+  "actionEdit": "Edit",
+  "actionAdd": "Add",
+  "actionSkip": "Skip",
+  "actionDone": "Done",
+  "actionFinish": "Finish",
+  "search": "Search",
+  "fieldRequired": "Required",
+  "fieldInvalidNumber": "Enter a number",
+  "unsavedChangesTitle": "Discard changes?",
+  "actionDiscard": "Discard",
   "onboardingChooseLanguage": "Choose your language",
   "onboardingLanguageHint": "You can change it later in settings.",
-  "actionContinue": "Continue",
-
+  "profileTitle": "About you",
+  "profileHint": "Used to estimate your daily calories and macros. You can skip this and set goals manually.",
+  "sex": "Sex",
+  "sexMale": "Male",
+  "sexFemale": "Female",
+  "birthDate": "Date of birth",
+  "heightCm": "Height, cm",
+  "weightKg": "Weight, kg",
+  "activity": "Activity",
+  "activitySedentary": "Sedentary",
+  "activitySedentaryHint": "Little or no exercise",
+  "activityLight": "Light",
+  "activityLightHint": "Exercise 1–3 times a week",
+  "activityModerate": "Moderate",
+  "activityModerateHint": "Exercise 3–5 times a week",
+  "activityHigh": "High",
+  "activityHighHint": "Exercise 6–7 times a week",
+  "activityVeryHigh": "Very high",
+  "activityVeryHighHint": "Physical job or training twice a day",
+  "weightGoal": "Goal",
+  "goalLose": "Lose",
+  "goalMaintain": "Maintain",
+  "goalGain": "Gain",
+  "goalsTitle": "Daily goals",
+  "goalsAutoHint": "Calculated from your profile. Change any value to set it manually.",
+  "goalsManualHint": "Set manually.",
+  "goalsRecalculate": "Recalculate from profile",
+  "kcalFromMacros": "From macros: {value} kcal",
+  "@kcalFromMacros": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "emptyProducts": "No products yet",
   "emptyDishes": "No dishes yet",
-  "emptyDiary": "Nothing logged today",
-  "comingSoon": "Coming soon",
-
+  "emptyDiary": "Nothing logged on this day",
+  "nothingFound": "Nothing found",
   "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow",
   "dayTotal": "Day total",
-
+  "ofGoal": "of {goal}",
+  "@ofGoal": {
+    "placeholders": {
+      "goal": {
+        "type": "String"
+      }
+    }
+  },
+  "kcalLeft": "{value} kcal left",
+  "@kcalLeft": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "kcalOver": "{value} kcal over",
+  "@kcalOver": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "noMealGroup": "Other",
+  "addToDiary": "Add to diary",
+  "addedToDiary": "Added: {name}",
+  "@addedToDiary": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "editEntry": "Edit entry",
+  "grams": "Grams",
+  "mealGroup": "Meal",
   "nutrientKcal": "kcal",
   "nutrientProtein": "Protein",
   "nutrientFat": "Fat",
@@ -27,13 +110,43 @@
   "nutrientSatFat": "Saturated fat",
   "nutrientSalt": "Salt",
   "nutrientWater": "Water",
+  "nutrientCalories": "Calories",
   "unitGram": "g",
-
+  "unitCm": "cm",
+  "unitKg": "kg",
+  "unitMl": "ml",
   "mealBreakfast": "Breakfast",
   "mealLunch": "Lunch",
   "mealDinner": "Dinner",
   "mealSnack": "Snack",
-
+  "productNew": "New product",
+  "productEdit": "Edit product",
+  "fieldName": "Name",
+  "fieldDescription": "Description",
+  "basis": "Measured in",
+  "basisG": "Grams",
+  "basisMl": "Millilitres",
+  "per100g": "Per 100 g",
+  "per100ml": "Per 100 ml",
+  "kcalAutoHint": "Leave empty to calculate from macros",
+  "photos": "Photos",
+  "addPhoto": "Add photo",
+  "photoGallery": "Choose from gallery",
+  "photoCamera": "Take a photo",
+  "deleteProductTitle": "Delete this product?",
+  "deleteProductBody": "It disappears from the list. Diary entries and dishes that use it are kept.",
+  "dishNew": "New dish",
+  "dishEdit": "Edit dish",
+  "ingredients": "Ingredients",
+  "addIngredient": "Add ingredient",
+  "ingredientsRequired": "Add at least one ingredient",
+  "cookedWeight": "Cooked weight, g",
+  "cookedWeightHint": "Weigh the finished dish to account for water lost or absorbed while cooking. Empty = sum of ingredients.",
+  "wholeDish": "Whole dish",
+  "dishSuitsFor": "Suits",
+  "deleteDishTitle": "Delete this dish?",
+  "deleteDishBody": "It disappears from the list. Diary entries that use it are kept.",
+  "chooseProduct": "Choose a product",
   "settingsLanguage": "Language",
   "settingsTheme": "Theme",
   "themeSystem": "System",
@@ -41,5 +154,38 @@
   "themeDark": "Dark",
   "settingsMode": "Mode",
   "modeLocal": "Local — data stays on this device",
-  "modeCloud": "Cloud"
+  "modeCloud": "Cloud",
+  "settingsNutrients": "Extra nutrients",
+  "settingsNutrientsHint": "Calories, protein, fat and carbs are always tracked. Pick what else to show.",
+  "settingsProfile": "Profile",
+  "settingsGoals": "Daily goals",
+  "settingsMealGroups": "Meal groups",
+  "mealGroupAdd": "Add group",
+  "mealGroupName": "Group name",
+  "notSet": "Not set",
+  "settingsFont": "Font",
+  "fontSystem": "System font",
+  "fontCustom": "Your fonts",
+  "fontAdd": "Add font",
+  "fontAddHint": "TTF or OTF file, up to 5 MB",
+  "fontAdded": "Font added: {name}",
+  "@fontAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fontTooLarge": "The file is too large (max 5 MB)",
+  "fontNotAFont": "This file is not a valid font",
+  "fontUnsupported": "Font collections and WOFF files are not supported, use TTF or OTF",
+  "fontDeleteTitle": "Delete font {name}?",
+  "@fontDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fontPreview": "Today 1 240 kcal · Protein 96 g"
 }

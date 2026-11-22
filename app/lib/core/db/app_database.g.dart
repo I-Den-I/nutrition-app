@@ -2106,7 +2106,7 @@ class ProductServingsCompanion extends UpdateCompanion<ProductServing> {
   }
 }
 
-class $DishesTable extends Dishes with TableInfo<$DishesTable, Dishe> {
+class $DishesTable extends Dishes with TableInfo<$DishesTable, Dish> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -2231,7 +2231,7 @@ class $DishesTable extends Dishes with TableInfo<$DishesTable, Dishe> {
   static const String $name = 'dishes';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Dishe> instance, {
+    Insertable<Dish> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -2295,9 +2295,9 @@ class $DishesTable extends Dishes with TableInfo<$DishesTable, Dishe> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Dishe map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Dish map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Dishe(
+    return Dish(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -2350,7 +2350,7 @@ class $DishesTable extends Dishes with TableInfo<$DishesTable, Dishe> {
   );
 }
 
-class Dishe extends DataClass implements Insertable<Dishe> {
+class Dish extends DataClass implements Insertable<Dish> {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -2362,7 +2362,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
 
   /// Weight of the finished dish. Null → sum of raw ingredient weights.
   final double? cookedWeightG;
-  const Dishe({
+  const Dish({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -2422,12 +2422,12 @@ class Dishe extends DataClass implements Insertable<Dishe> {
     );
   }
 
-  factory Dishe.fromJson(
+  factory Dish.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Dishe(
+    return Dish(
       id: serializer.fromJson<String>(json['id']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -2459,7 +2459,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
     };
   }
 
-  Dishe copyWith({
+  Dish copyWith({
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -2469,7 +2469,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
     String? name,
     Value<String?> description = const Value.absent(),
     Value<double?> cookedWeightG = const Value.absent(),
-  }) => Dishe(
+  }) => Dish(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -2482,8 +2482,8 @@ class Dishe extends DataClass implements Insertable<Dishe> {
         ? cookedWeightG.value
         : this.cookedWeightG,
   );
-  Dishe copyWithCompanion(DishesCompanion data) {
-    return Dishe(
+  Dish copyWithCompanion(DishesCompanion data) {
+    return Dish(
       id: data.id.present ? data.id.value : this.id,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -2504,7 +2504,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
 
   @override
   String toString() {
-    return (StringBuffer('Dishe(')
+    return (StringBuffer('Dish(')
           ..write('id: $id, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
@@ -2533,7 +2533,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Dishe &&
+      (other is Dish &&
           other.id == this.id &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
@@ -2545,7 +2545,7 @@ class Dishe extends DataClass implements Insertable<Dishe> {
           other.cookedWeightG == this.cookedWeightG);
 }
 
-class DishesCompanion extends UpdateCompanion<Dishe> {
+class DishesCompanion extends UpdateCompanion<Dish> {
   final Value<String> id;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -2580,7 +2580,7 @@ class DishesCompanion extends UpdateCompanion<Dishe> {
     this.cookedWeightG = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : name = Value(name);
-  static Insertable<Dishe> custom({
+  static Insertable<Dish> custom({
     Expression<String>? id,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -4925,6 +4925,524 @@ class MediaCompanion extends UpdateCompanion<MediaData> {
   }
 }
 
+class $MediaBlobsTable extends MediaBlobs
+    with TableInfo<$MediaBlobsTable, MediaBlob> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MediaBlobsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bytesMeta = const VerificationMeta('bytes');
+  @override
+  late final GeneratedColumn<Uint8List> bytes = GeneratedColumn<Uint8List>(
+    'bytes',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [key, bytes];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'media_blobs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MediaBlob> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('bytes')) {
+      context.handle(
+        _bytesMeta,
+        bytes.isAcceptableOrUnknown(data['bytes']!, _bytesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bytesMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key};
+  @override
+  MediaBlob map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MediaBlob(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      bytes: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}bytes'],
+      )!,
+    );
+  }
+
+  @override
+  $MediaBlobsTable createAlias(String alias) {
+    return $MediaBlobsTable(attachedDatabase, alias);
+  }
+}
+
+class MediaBlob extends DataClass implements Insertable<MediaBlob> {
+  final String key;
+  final Uint8List bytes;
+  const MediaBlob({required this.key, required this.bytes});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['bytes'] = Variable<Uint8List>(bytes);
+    return map;
+  }
+
+  MediaBlobsCompanion toCompanion(bool nullToAbsent) {
+    return MediaBlobsCompanion(key: Value(key), bytes: Value(bytes));
+  }
+
+  factory MediaBlob.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MediaBlob(
+      key: serializer.fromJson<String>(json['key']),
+      bytes: serializer.fromJson<Uint8List>(json['bytes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'bytes': serializer.toJson<Uint8List>(bytes),
+    };
+  }
+
+  MediaBlob copyWith({String? key, Uint8List? bytes}) =>
+      MediaBlob(key: key ?? this.key, bytes: bytes ?? this.bytes);
+  MediaBlob copyWithCompanion(MediaBlobsCompanion data) {
+    return MediaBlob(
+      key: data.key.present ? data.key.value : this.key,
+      bytes: data.bytes.present ? data.bytes.value : this.bytes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaBlob(')
+          ..write('key: $key, ')
+          ..write('bytes: $bytes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, $driftBlobEquality.hash(bytes));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MediaBlob &&
+          other.key == this.key &&
+          $driftBlobEquality.equals(other.bytes, this.bytes));
+}
+
+class MediaBlobsCompanion extends UpdateCompanion<MediaBlob> {
+  final Value<String> key;
+  final Value<Uint8List> bytes;
+  final Value<int> rowid;
+  const MediaBlobsCompanion({
+    this.key = const Value.absent(),
+    this.bytes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MediaBlobsCompanion.insert({
+    required String key,
+    required Uint8List bytes,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       bytes = Value(bytes);
+  static Insertable<MediaBlob> custom({
+    Expression<String>? key,
+    Expression<Uint8List>? bytes,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (bytes != null) 'bytes': bytes,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MediaBlobsCompanion copyWith({
+    Value<String>? key,
+    Value<Uint8List>? bytes,
+    Value<int>? rowid,
+  }) {
+    return MediaBlobsCompanion(
+      key: key ?? this.key,
+      bytes: bytes ?? this.bytes,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (bytes.present) {
+      map['bytes'] = Variable<Uint8List>(bytes.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaBlobsCompanion(')
+          ..write('key: $key, ')
+          ..write('bytes: $bytes, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CustomFontsTable extends CustomFonts
+    with TableInfo<$CustomFontsTable, CustomFont> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomFontsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: newId,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 80,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _storageKeyMeta = const VerificationMeta(
+    'storageKey',
+  );
+  @override
+  late final GeneratedColumn<String> storageKey = GeneratedColumn<String>(
+    'storage_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, storageKey, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'custom_fonts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CustomFont> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('storage_key')) {
+      context.handle(
+        _storageKeyMeta,
+        storageKey.isAcceptableOrUnknown(data['storage_key']!, _storageKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_storageKeyMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CustomFont map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CustomFont(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      storageKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}storage_key'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CustomFontsTable createAlias(String alias) {
+    return $CustomFontsTable(attachedDatabase, alias);
+  }
+}
+
+class CustomFont extends DataClass implements Insertable<CustomFont> {
+  final String id;
+  final String name;
+  final String storageKey;
+  final DateTime createdAt;
+  const CustomFont({
+    required this.id,
+    required this.name,
+    required this.storageKey,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['storage_key'] = Variable<String>(storageKey);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  CustomFontsCompanion toCompanion(bool nullToAbsent) {
+    return CustomFontsCompanion(
+      id: Value(id),
+      name: Value(name),
+      storageKey: Value(storageKey),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory CustomFont.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CustomFont(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      storageKey: serializer.fromJson<String>(json['storageKey']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'storageKey': serializer.toJson<String>(storageKey),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  CustomFont copyWith({
+    String? id,
+    String? name,
+    String? storageKey,
+    DateTime? createdAt,
+  }) => CustomFont(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    storageKey: storageKey ?? this.storageKey,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  CustomFont copyWithCompanion(CustomFontsCompanion data) {
+    return CustomFont(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      storageKey: data.storageKey.present
+          ? data.storageKey.value
+          : this.storageKey,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFont(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('storageKey: $storageKey, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, storageKey, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CustomFont &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.storageKey == this.storageKey &&
+          other.createdAt == this.createdAt);
+}
+
+class CustomFontsCompanion extends UpdateCompanion<CustomFont> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> storageKey;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const CustomFontsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.storageKey = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CustomFontsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String storageKey,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       storageKey = Value(storageKey);
+  static Insertable<CustomFont> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? storageKey,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (storageKey != null) 'storage_key': storageKey,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CustomFontsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? storageKey,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return CustomFontsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      storageKey: storageKey ?? this.storageKey,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (storageKey.present) {
+      map['storage_key'] = Variable<String>(storageKey.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFontsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('storageKey: $storageKey, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $DiaryEntriesTable extends DiaryEntries
     with TableInfo<$DiaryEntriesTable, DiaryEntry> {
   @override
@@ -6404,7 +6922,7 @@ class ProfilesCompanion extends UpdateCompanion<Profile> {
 }
 
 class $WeightLogTable extends WeightLog
-    with TableInfo<$WeightLogTable, WeightLogData> {
+    with TableInfo<$WeightLogTable, WeightEntry> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -6494,7 +7012,7 @@ class $WeightLogTable extends WeightLog
   static const String $name = 'weight_log';
   @override
   VerificationContext validateIntegrity(
-    Insertable<WeightLogData> instance, {
+    Insertable<WeightEntry> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -6542,9 +7060,9 @@ class $WeightLogTable extends WeightLog
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  WeightLogData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  WeightEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return WeightLogData(
+    return WeightEntry(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -6578,14 +7096,14 @@ class $WeightLogTable extends WeightLog
   }
 }
 
-class WeightLogData extends DataClass implements Insertable<WeightLogData> {
+class WeightEntry extends DataClass implements Insertable<WeightEntry> {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
   final String day;
   final double weightKg;
-  const WeightLogData({
+  const WeightEntry({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -6620,12 +7138,12 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
     );
   }
 
-  factory WeightLogData.fromJson(
+  factory WeightEntry.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return WeightLogData(
+    return WeightEntry(
       id: serializer.fromJson<String>(json['id']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -6647,14 +7165,14 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
     };
   }
 
-  WeightLogData copyWith({
+  WeightEntry copyWith({
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
     Value<DateTime?> deletedAt = const Value.absent(),
     String? day,
     double? weightKg,
-  }) => WeightLogData(
+  }) => WeightEntry(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -6662,8 +7180,8 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
     day: day ?? this.day,
     weightKg: weightKg ?? this.weightKg,
   );
-  WeightLogData copyWithCompanion(WeightLogCompanion data) {
-    return WeightLogData(
+  WeightEntry copyWithCompanion(WeightLogCompanion data) {
+    return WeightEntry(
       id: data.id.present ? data.id.value : this.id,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -6675,7 +7193,7 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
 
   @override
   String toString() {
-    return (StringBuffer('WeightLogData(')
+    return (StringBuffer('WeightEntry(')
           ..write('id: $id, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
@@ -6692,7 +7210,7 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WeightLogData &&
+      (other is WeightEntry &&
           other.id == this.id &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
@@ -6701,7 +7219,7 @@ class WeightLogData extends DataClass implements Insertable<WeightLogData> {
           other.weightKg == this.weightKg);
 }
 
-class WeightLogCompanion extends UpdateCompanion<WeightLogData> {
+class WeightLogCompanion extends UpdateCompanion<WeightEntry> {
   final Value<String> id;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -6728,7 +7246,7 @@ class WeightLogCompanion extends UpdateCompanion<WeightLogData> {
     this.rowid = const Value.absent(),
   }) : day = Value(day),
        weightKg = Value(weightKg);
-  static Insertable<WeightLogData> custom({
+  static Insertable<WeightEntry> custom({
     Expression<String>? id,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -7426,10 +7944,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MealGroupsTable mealGroups = $MealGroupsTable(this);
   late final $DishMealGroupsTable dishMealGroups = $DishMealGroupsTable(this);
   late final $MediaTable media = $MediaTable(this);
+  late final $MediaBlobsTable mediaBlobs = $MediaBlobsTable(this);
+  late final $CustomFontsTable customFonts = $CustomFontsTable(this);
   late final $DiaryEntriesTable diaryEntries = $DiaryEntriesTable(this);
   late final $ProfilesTable profiles = $ProfilesTable(this);
   late final $WeightLogTable weightLog = $WeightLogTable(this);
   late final $GoalsTable goals = $GoalsTable(this);
+  late final Index diaryEntriesDay = Index(
+    'diary_entries_day',
+    'CREATE INDEX diary_entries_day ON diary_entries (day)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7444,10 +7968,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     mealGroups,
     dishMealGroups,
     media,
+    mediaBlobs,
+    customFonts,
     diaryEntries,
     profiles,
     weightLog,
     goals,
+    diaryEntriesDay,
   ];
 }
 
@@ -9380,7 +9907,7 @@ typedef $$DishesTableUpdateCompanionBuilder = DishesCompanion Function({
 });
 
 final class $$DishesTableReferences
-    extends BaseReferences<_$AppDatabase, $DishesTable, Dishe> {
+    extends BaseReferences<_$AppDatabase, $DishesTable, Dish> {
   $$DishesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$DishItemsTable, List<DishItem>>
@@ -9748,14 +10275,14 @@ class $$DishesTableTableManager
         RootTableManager<
           _$AppDatabase,
           $DishesTable,
-          Dishe,
+          Dish,
           $$DishesTableFilterComposer,
           $$DishesTableOrderingComposer,
           $$DishesTableAnnotationComposer,
           $$DishesTableCreateCompanionBuilder,
           $$DishesTableUpdateCompanionBuilder,
-          (Dishe, $$DishesTableReferences),
-          Dishe,
+          (Dish, $$DishesTableReferences),
+          Dish,
           PrefetchHooks Function({
             bool dishItemsRefs,
             bool dishMealGroupsRefs,
@@ -9824,7 +10351,7 @@ class $$DishesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$DishesTable, Dishe>(table),
+                  e.readTable<$DishesTable, Dish>(table),
                   $$DishesTableReferences(db, table, e),
                 ),
               )
@@ -9847,7 +10374,7 @@ class $$DishesTableTableManager
                     return [
                       if (dishItemsRefs)
                         await $_getPrefetchedDataByColumns<
-                          Dishe,
+                          Dish,
                           $DishesTable,
                           DishItem,
                           $DishItemsTable
@@ -9867,7 +10394,7 @@ class $$DishesTableTableManager
                         ),
                       if (dishMealGroupsRefs)
                         await $_getPrefetchedDataByColumns<
-                          Dishe,
+                          Dish,
                           $DishesTable,
                           DishMealGroup,
                           $DishMealGroupsTable
@@ -9887,7 +10414,7 @@ class $$DishesTableTableManager
                         ),
                       if (diaryEntriesRefs)
                         await $_getPrefetchedDataByColumns<
-                          Dishe,
+                          Dish,
                           $DishesTable,
                           DiaryEntry,
                           $DiaryEntriesTable
@@ -9917,14 +10444,14 @@ typedef $$DishesTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $DishesTable,
-      Dishe,
+      Dish,
       $$DishesTableFilterComposer,
       $$DishesTableOrderingComposer,
       $$DishesTableAnnotationComposer,
       $$DishesTableCreateCompanionBuilder,
       $$DishesTableUpdateCompanionBuilder,
-      (Dishe, $$DishesTableReferences),
-      Dishe,
+      (Dish, $$DishesTableReferences),
+      Dish,
       PrefetchHooks Function({
         bool dishItemsRefs,
         bool dishMealGroupsRefs,
@@ -11636,6 +12163,340 @@ typedef $$MediaTableProcessedTableManager =
       MediaData,
       PrefetchHooks Function()
     >;
+typedef $$MediaBlobsTableCreateCompanionBuilder = MediaBlobsCompanion Function({
+  required String key,
+  required Uint8List bytes,
+  Value<int> rowid,
+});
+typedef $$MediaBlobsTableUpdateCompanionBuilder = MediaBlobsCompanion Function({
+  Value<String> key,
+  Value<Uint8List> bytes,
+  Value<int> rowid,
+});
+
+class $$MediaBlobsTableFilterComposer
+    extends Composer<_$AppDatabase, $MediaBlobsTable> {
+  $$MediaBlobsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get bytes => $composableBuilder(
+    column: $table.bytes,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MediaBlobsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MediaBlobsTable> {
+  $$MediaBlobsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get bytes => $composableBuilder(
+    column: $table.bytes,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MediaBlobsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MediaBlobsTable> {
+  $$MediaBlobsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get bytes =>
+      $composableBuilder(column: $table.bytes, builder: (column) => column);
+}
+
+class $$MediaBlobsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MediaBlobsTable,
+          MediaBlob,
+          $$MediaBlobsTableFilterComposer,
+          $$MediaBlobsTableOrderingComposer,
+          $$MediaBlobsTableAnnotationComposer,
+          $$MediaBlobsTableCreateCompanionBuilder,
+          $$MediaBlobsTableUpdateCompanionBuilder,
+          (
+            MediaBlob,
+            BaseReferences<_$AppDatabase, $MediaBlobsTable, MediaBlob>,
+          ),
+          MediaBlob,
+          PrefetchHooks Function()
+        > {
+  $$MediaBlobsTableTableManager(_$AppDatabase db, $MediaBlobsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MediaBlobsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MediaBlobsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MediaBlobsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> key = const Value.absent(),
+            Value<Uint8List> bytes = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => MediaBlobsCompanion(key: key, bytes: bytes, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String key,
+                required Uint8List bytes,
+                Value<int> rowid = const Value.absent(),
+              }) => MediaBlobsCompanion.insert(
+                key: key,
+                bytes: bytes,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MediaBlobsTable, MediaBlob>(table),
+                  BaseReferences<_$AppDatabase, $MediaBlobsTable, MediaBlob>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MediaBlobsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MediaBlobsTable,
+      MediaBlob,
+      $$MediaBlobsTableFilterComposer,
+      $$MediaBlobsTableOrderingComposer,
+      $$MediaBlobsTableAnnotationComposer,
+      $$MediaBlobsTableCreateCompanionBuilder,
+      $$MediaBlobsTableUpdateCompanionBuilder,
+      (MediaBlob, BaseReferences<_$AppDatabase, $MediaBlobsTable, MediaBlob>),
+      MediaBlob,
+      PrefetchHooks Function()
+    >;
+typedef $$CustomFontsTableCreateCompanionBuilder =
+    CustomFontsCompanion Function({
+      Value<String> id,
+      required String name,
+      required String storageKey,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$CustomFontsTableUpdateCompanionBuilder =
+    CustomFontsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> storageKey,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$CustomFontsTableFilterComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CustomFontsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CustomFontsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CustomFontsTable> {
+  $$CustomFontsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get storageKey => $composableBuilder(
+    column: $table.storageKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$CustomFontsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CustomFontsTable,
+          CustomFont,
+          $$CustomFontsTableFilterComposer,
+          $$CustomFontsTableOrderingComposer,
+          $$CustomFontsTableAnnotationComposer,
+          $$CustomFontsTableCreateCompanionBuilder,
+          $$CustomFontsTableUpdateCompanionBuilder,
+          (
+            CustomFont,
+            BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>,
+          ),
+          CustomFont,
+          PrefetchHooks Function()
+        > {
+  $$CustomFontsTableTableManager(_$AppDatabase db, $CustomFontsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CustomFontsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CustomFontsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CustomFontsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> storageKey = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFontsCompanion(
+                id: id,
+                name: name,
+                storageKey: storageKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String name,
+                required String storageKey,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFontsCompanion.insert(
+                id: id,
+                name: name,
+                storageKey: storageKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CustomFontsTable, CustomFont>(table),
+                  BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CustomFontsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CustomFontsTable,
+      CustomFont,
+      $$CustomFontsTableFilterComposer,
+      $$CustomFontsTableOrderingComposer,
+      $$CustomFontsTableAnnotationComposer,
+      $$CustomFontsTableCreateCompanionBuilder,
+      $$CustomFontsTableUpdateCompanionBuilder,
+      (
+        CustomFont,
+        BaseReferences<_$AppDatabase, $CustomFontsTable, CustomFont>,
+      ),
+      CustomFont,
+      PrefetchHooks Function()
+    >;
 typedef $$DiaryEntriesTableCreateCompanionBuilder =
     DiaryEntriesCompanion Function({
       Value<String> id,
@@ -12744,17 +13605,17 @@ class $$WeightLogTableTableManager
         RootTableManager<
           _$AppDatabase,
           $WeightLogTable,
-          WeightLogData,
+          WeightEntry,
           $$WeightLogTableFilterComposer,
           $$WeightLogTableOrderingComposer,
           $$WeightLogTableAnnotationComposer,
           $$WeightLogTableCreateCompanionBuilder,
           $$WeightLogTableUpdateCompanionBuilder,
           (
-            WeightLogData,
-            BaseReferences<_$AppDatabase, $WeightLogTable, WeightLogData>,
+            WeightEntry,
+            BaseReferences<_$AppDatabase, $WeightLogTable, WeightEntry>,
           ),
-          WeightLogData,
+          WeightEntry,
           PrefetchHooks Function()
         > {
   $$WeightLogTableTableManager(_$AppDatabase db, $WeightLogTable table)
@@ -12807,8 +13668,8 @@ class $$WeightLogTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$WeightLogTable, WeightLogData>(table),
-                  BaseReferences<_$AppDatabase, $WeightLogTable, WeightLogData>(
+                  e.readTable<$WeightLogTable, WeightEntry>(table),
+                  BaseReferences<_$AppDatabase, $WeightLogTable, WeightEntry>(
                     db,
                     table,
                     e,
@@ -12825,17 +13686,17 @@ typedef $$WeightLogTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $WeightLogTable,
-      WeightLogData,
+      WeightEntry,
       $$WeightLogTableFilterComposer,
       $$WeightLogTableOrderingComposer,
       $$WeightLogTableAnnotationComposer,
       $$WeightLogTableCreateCompanionBuilder,
       $$WeightLogTableUpdateCompanionBuilder,
       (
-        WeightLogData,
-        BaseReferences<_$AppDatabase, $WeightLogTable, WeightLogData>,
+        WeightEntry,
+        BaseReferences<_$AppDatabase, $WeightLogTable, WeightEntry>,
       ),
-      WeightLogData,
+      WeightEntry,
       PrefetchHooks Function()
     >;
 typedef $$GoalsTableCreateCompanionBuilder = GoalsCompanion Function({
@@ -13156,6 +14017,10 @@ class $AppDatabaseManager {
       $$DishMealGroupsTableTableManager(_db, _db.dishMealGroups);
   $$MediaTableTableManager get media =>
       $$MediaTableTableManager(_db, _db.media);
+  $$MediaBlobsTableTableManager get mediaBlobs =>
+      $$MediaBlobsTableTableManager(_db, _db.mediaBlobs);
+  $$CustomFontsTableTableManager get customFonts =>
+      $$CustomFontsTableTableManager(_db, _db.customFonts);
   $$DiaryEntriesTableTableManager get diaryEntries =>
       $$DiaryEntriesTableTableManager(_db, _db.diaryEntries);
   $$ProfilesTableTableManager get profiles =>
