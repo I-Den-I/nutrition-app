@@ -1,0 +1,45 @@
+{
+  "@@locale": "de",
+  "appTitle": "Ernährung",
+  "navDiary": "Tagebuch",
+  "navProducts": "Produkte",
+  "navDishes": "Gerichte",
+  "navSettings": "Einstellungen",
+
+  "onboardingChooseLanguage": "Sprache wählen",
+  "onboardingLanguageHint": "Du kannst sie später in den Einstellungen ändern.",
+  "actionContinue": "Weiter",
+
+  "emptyProducts": "Noch keine Produkte",
+  "emptyDishes": "Noch keine Gerichte",
+  "emptyDiary": "Heute noch nichts eingetragen",
+  "comingSoon": "Demnächst",
+
+  "today": "Heute",
+  "dayTotal": "Tagessumme",
+
+  "nutrientKcal": "kcal",
+  "nutrientProtein": "Eiweiß",
+  "nutrientFat": "Fett",
+  "nutrientCarbs": "Kohlenhydrate",
+  "nutrientFiber": "Ballaststoffe",
+  "nutrientSugar": "Zucker",
+  "nutrientSatFat": "Gesättigte Fettsäuren",
+  "nutrientSalt": "Salz",
+  "nutrientWater": "Wasser",
+  "unitGram": "g",
+
+  "mealBreakfast": "Frühstück",
+  "mealLunch": "Mittagessen",
+  "mealDinner": "Abendessen",
+  "mealSnack": "Snack",
+
+  "settingsLanguage": "Sprache",
+  "settingsTheme": "Design",
+  "themeSystem": "System",
+  "themeLight": "Hell",
+  "themeDark": "Dunkel",
+  "settingsMode": "Modus",
+  "modeLocal": "Lokal — Daten bleiben auf diesem Gerät",
+  "modeCloud": "Cloud"
+}
